@@ -17,8 +17,8 @@ export default async function handler(req, res) {
 
         // Create new user
         const newUser = new User({
-            name,
-            email,
+            username: name,
+            email: email,
             password: hashedPassword,
         });
 
