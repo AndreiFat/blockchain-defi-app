@@ -31,10 +31,14 @@ export const authOptions = {
     ],
     pages: {
         signIn: '/auth/login',
-        // signOut: '/auth/signout',
+        signOut: '/auth/signout',
         // error: '/auth/error',
         // verifyRequest: '/auth/verify-request',
         // newUser: null,
+    },
+    session: {
+        jwt: true,
+        maxAge: 24 * 60 * 60, // 24 hours (in seconds)
     },
 }
 
