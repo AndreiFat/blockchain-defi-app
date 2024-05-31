@@ -27,6 +27,8 @@ const Home = () => {
                     </div>
                     <div className="col-md-6">
                         Notifications
+
+                        dsa
                     </div>
                 </div>
             </main>

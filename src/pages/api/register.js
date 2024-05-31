@@ -3,10 +3,7 @@ import User from '../model/User';
 import bcrypt from 'bcryptjs';
 
 export default async function handler(req, res) {
-    const {username, email, password} = req.body;
-    console.log(username)
-    console.log(email)
-    console.log(password)
+    const {name, email, password} = req.body;
     try {
         await connectToDatabase();
         // Check if user already exists
@@ -20,7 +17,7 @@ export default async function handler(req, res) {
 
         // Create new user
         const newUser = new User({
-            username,
+            name,
             email,
             password: hashedPassword,
         });

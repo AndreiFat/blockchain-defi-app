@@ -13,7 +13,7 @@ export default function Register() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setError(null); // Reset error before new request
-
+        console.log(credentials)
         // Call the custom API route to register the user
         const response = await fetch('/api/register', {
             method: 'POST',
