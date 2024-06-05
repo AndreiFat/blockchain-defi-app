@@ -57,7 +57,7 @@ const Login = () => {
                            onChange={handleChange}/>
                 </div>
                 <div className={"mb-4"}>
-                    <Link className={"text-decoration-none text-white"} href="/auth/register">Don't have an
+                    <Link className={"text-decoration-none text-white"} href="/auth/register">Don`t have an
                         account? <u>Register</u></Link>
                 </div>
                 <button className={"btn btn-primary w-100"} type="submit">Submit</button>
