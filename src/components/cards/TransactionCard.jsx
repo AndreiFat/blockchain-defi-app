@@ -1,6 +1,6 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faLeftLong, faRightLong} from "@fortawesome/free-solid-svg-icons";
-import {truncateAddress} from "@/pages/components/utils/truncateAddress";
+import {truncateAddress} from "@/components/utils/truncateAddress";
 import {faEthereum} from "@fortawesome/free-brands-svg-icons";
 import Link from "next/link";
 

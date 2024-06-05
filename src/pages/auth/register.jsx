@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {signIn} from 'next-auth/react';
 import Head from "next/head";
-import AuthLayout from "@/pages/components/AuthLayout";
+import AuthLayout from "@/components/AuthLayout";
 import Link from "next/link";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEnvelope, faLock, faUser} from "@fortawesome/free-solid-svg-icons";

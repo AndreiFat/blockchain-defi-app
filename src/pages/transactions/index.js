@@ -1,5 +1,5 @@
-import MainLayout from "@/pages/components/MainLayout";
-import TransactionCard from "@/pages/components/cards/TransactionCard";
+import MainLayout from "@/components/MainLayout";
+import TransactionCard from "@/components/cards/TransactionCard";
 import Head from "next/head";
 
 const Index = () => {

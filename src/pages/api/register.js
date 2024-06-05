@@ -1,5 +1,5 @@
-import connectToDatabase from '../libraries/mongodb';
-import User from '../model/User';
+import connectToDatabase from '@/libraries/mongodb';
+import User from '@/model/User';
 import bcrypt from 'bcryptjs';
 
 export default async function handler(req, res) {

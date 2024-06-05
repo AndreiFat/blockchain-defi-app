@@ -1,10 +1,10 @@
 import Head from "next/head";
 import styles from "@/styles/Home.module.css";
 import {useSession} from "next-auth/react";
-import MainLayout from "./components/MainLayout"
-import MoneyStateCard from "@/pages/components/cards/MoneyStateCard";
-import TextSideBySide from "@/pages/components/text/TextSideBySide";
-import NotificationCard from "@/pages/components/cards/NotificationCard";
+import MainLayout from "@/components/MainLayout"
+import MoneyStateCard from "@/components/cards/MoneyStateCard";
+import TextSideBySide from "@/components/text/TextSideBySide";
+import NotificationCard from "@/components/cards/NotificationCard";
 
 const Home = () => {
     const {data: session, status} = useSession();

@@ -1,5 +1,5 @@
 import {useRouter} from "next/router";
-import MainLayout from "@/pages/components/MainLayout";
+import MainLayout from "@/components/MainLayout";
 
 const Transaction = () => {
     const router = useRouter();

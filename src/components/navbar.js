@@ -32,7 +32,7 @@ export default function Navbar() {
                                 </Link>
                             </li>
                             <li className="nav-item">
-                                <Link href="/transactions/"
+                                <Link href="/transactions"
                                       className={`nav-link ${pathname.startsWith('/transactions') ? 'active' : ''}`}
                                       passHref>
                                     Transactions

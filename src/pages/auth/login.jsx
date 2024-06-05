@@ -1,7 +1,7 @@
 import {useState} from 'react';
 import {signIn} from 'next-auth/react';
 import {useRouter} from 'next/router';
-import AuthLayout from "@/pages/components/AuthLayout";
+import AuthLayout from "@/components/AuthLayout";
 import Head from "next/head";
 import Link from "next/link";
 
