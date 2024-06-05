@@ -2,12 +2,16 @@ import Link from "next/link";
 import {signIn, useSession} from "next-auth/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faUser} from "@fortawesome/free-solid-svg-icons";
+import {useRouter} from "next/router";
 
 export default function Navbar() {
+    const router = useRouter();
+    const {pathname} = router;
     const {data: session, status} = useSession();
+
     return <>
-        <div className="bg-dark" data-bs-theme="dark">
-            <nav className="navbar navbar-expand-lg text-white py-3">
+        <div className="nav-dark" data-bs-theme="dark">
+            <nav className="navbar navbar-expand-lg text-white py-4">
                 <div className="container">
                     <Link className={"nav-brand me-2"} href={"/"}><img src={"/assets/Logo-simple.svg"}
                                                                        alt={"Go to homepage"} height={42} width={42}
@@ -22,16 +26,30 @@ export default function Navbar() {
 
                         <ul className="navbar-nav d-flex gap-lg-3">
                             <li className="nav-item">
-                                <a className="nav-link active" aria-current="page" href="#">Dashboard</a>
+                                <Link href="/" className={`nav-link ${pathname === '/' ? 'active' : ''}`}
+                                      aria-current="page" passHref>
+                                    Dashboard
+                                </Link>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#">Transactions</a>
+                                <Link href="/transactions/"
+                                      className={`nav-link ${pathname.startsWith('/transactions') ? 'active' : ''}`}
+                                      passHref>
+                                    Transactions
+                                </Link>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#">Savings</a>
+                                <Link href="/savings" className={`nav-link ${pathname === '/savings' ? 'active' : ''}`}
+                                      passHref>
+                                    Savings
+                                </Link>
                             </li>
                             <li className="nav-item">
-                                <a className="nav-link" href="#">Lending</a>
+                                <Link href="/lendings"
+                                      className={`nav-link ${pathname === '/lendings' ? 'active' : ''}`}
+                                      passHref>
+                                    Lending
+                                </Link>
                             </li>
                         </ul>
                         <ul className="navbar-nav gap-lg-3">
