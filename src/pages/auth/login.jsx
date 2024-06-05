@@ -1,8 +1,9 @@
 import {useState} from 'react';
 import {signIn} from 'next-auth/react';
 import {useRouter} from 'next/router';
-import AuthLayout from "@/pages/components/AuthLayout";
+import AuthLayout from "@/components/AuthLayout";
 import Head from "next/head";
+import Link from "next/link";
 
 const Login = () => {
     const [credentials, setCredentials] = useState({email: '', password: ''});
@@ -40,21 +41,30 @@ const Login = () => {
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
                 <link rel="icon" href="/assets/Logo-simple.svg"/>
             </Head>
+
             <h1>Login</h1>
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="email">Email:</label>
-                    <input type="email" id="email" name="email" value={credentials.email}
+                <div className={"mb-4"}>
+                    <label className={"form-label"} htmlFor="email">Email:</label>
+                    <input className={"form-control form-input"} type="email" id="email" name="email"
+                           value={credentials.email}
                            onChange={handleChange}/>
                 </div>
-                <div>
-                    <label htmlFor="password">Password:</label>
-                    <input type="password" id="password" name="password" value={credentials.password}
+                <div className={"mb-4"}>
+                    <label className={"form-label"} htmlFor="password">Password:</label>
+                    <input className={"form-control form-input"} type="password" id="password" name="password"
+                           value={credentials.password}
                            onChange={handleChange}/>
                 </div>
-                <button type="submit">Sign In</button>
+                <div className={"mb-4"}>
+                    <Link className={"text-decoration-none text-white"} href="/auth/register">Don`t have an
+                        account? <u>Register</u></Link>
+                </div>
+                <button className={"btn btn-primary w-100"} type="submit">Submit</button>
             </form>
-            {error && <p style={{color: 'red'}}>{error}</p>}
+            <div className="my-3">
+                {error && <p style={{color: 'red'}}>{error}</p>}
+            </div>
         </div>
     );
 }

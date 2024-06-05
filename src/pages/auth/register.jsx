@@ -1,8 +1,12 @@
 import {useState} from 'react';
 import {signIn} from 'next-auth/react';
 import Head from "next/head";
+import AuthLayout from "@/components/AuthLayout";
+import Link from "next/link";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faEnvelope, faLock, faUser} from "@fortawesome/free-solid-svg-icons";
 
-export default function Register() {
+const Register = () => {
     const [credentials, setCredentials] = useState({name: '', email: '', password: ''});
     const [error, setError] = useState(null);
 
@@ -59,25 +63,44 @@ export default function Register() {
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
                 <link rel="icon" href="/assets/Logo-simple.svg"/>
             </Head>
-            <h1>Register</h1>
+            <h1 className={"mb-4"}>Register</h1>
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label htmlFor="name">Username:</label>
-                    <input type="text" id="name" name="name" value={credentials.name}
+                <div className={"mb-4"}>
+                    <label className={"form-label"} htmlFor="name"><FontAwesomeIcon className={"me-2"}
+                                                                                    icon={faUser}/> Username</label>
+                    <input className={"form-control form-input"} type="text" id="name" name="name"
+                           value={credentials.name}
                            onChange={handleChange}/>
                 </div>
-                <div>
-                    <label htmlFor="email">Email:</label>
-                    <input type="email" id="email" name="email" value={credentials.email} onChange={handleChange}/>
-                </div>
-                <div>
-                    <label htmlFor="password">Password:</label>
-                    <input type="password" id="password" name="password" value={credentials.password}
+                <div className={"mb-4"}>
+                    <label className={"form-label"} htmlFor="email"><FontAwesomeIcon className={"me-2"}
+                                                                                     icon={faEnvelope}/> Email</label>
+                    <input className={"form-control form-input"} type="email" id="email" name="email"
+                           value={credentials.email}
                            onChange={handleChange}/>
                 </div>
-                <button type="submit">Register</button>
+                <div className={"mb-4"}>
+                    <label className={"form-label"} htmlFor="password"><FontAwesomeIcon className={"me-2"}
+                                                                                        icon={faLock}/> Password</label>
+                    <input className={"form-control form-input"} type="password" id="password" name="password"
+                           value={credentials.password}
+                           onChange={handleChange}/>
+                </div>
+                <div className={"mb-4"}>
+                    <Link className={"text-decoration-none text-white"} href="/auth/login">Already have an
+                        account? <u>Login</u></Link>
+                </div>
+                <button className={"btn btn-primary w-100"} type="submit">Submit</button>
             </form>
-            {/*{error && <p style={{color: 'red'}}>{error}</p>}*/}
+            <div className="my-3">
+                {error && <p style={{color: 'red'}}>{error}</p>}
+            </div>
         </div>
     );
 }
+
+Register.getLayout = function getLayout(page) {
+    return <AuthLayout>{page}</AuthLayout>;
+};
+
+export default Register;

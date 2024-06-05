@@ -4,16 +4,94 @@ body {
     font-family: "Nunito Sans", sans-serif !important;
     font-optical-sizing: auto;
     font-style: normal;
-
     background-color: #0A0A0A !important;
     color: white !important;
 }
 
-.text-primary {
+.nav-dark {
+    background-color: #121212 !important;
+}
+
+.font-text-primary {
     color: #3C38FF !important;
 }
 
 .active {
     color: #3C38FF !important;
     font-weight: 600 !important;
+}
+
+.auth-background-image {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+}
+
+.auth-background-image::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url("../../public/assets/background/auth-background.jpg") no-repeat, center;
+    background-size: cover;
+    opacity: 0.15; /* Adjust the opacity for transparency */
+    z-index: -2; /* Place it below other content */
+}
+
+.auth-background-image::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(150deg, #0A0A0A, #3C38FF); /* Black overlay with transparency */
+    opacity: 0.2;
+    z-index: -1; /* Place it above the background image but below other content */
+}
+
+.form-input {
+    width: 450px !important;
+    padding-top: 12px !important;
+    padding-bottom: 12px !important;
+    border-radius: 14px !important;
+    backdrop-filter: blur(4px) !important;
+    background-color: rgba(255, 255, 255, 0.3) !important;
+    border: 0 !important;
+    color: #ffffff !important;
+}
+
+.btn-primary {
+    background-color: #3C38FF !important;
+    border-color: #3C38FF !important;
+    padding-bottom: 10px !important;
+    padding-top: 10px !important;
+    border-radius: 14px !important;
+}
+
+.blurAmount {
+    filter: blur(8px) !important;
+    -webkit-filter: blur(8px);
+}
+
+.text-light {
+    font-weight: 100 !important;
+}
+
+.fs-7 {
+    font-size: 14px !important;
+}
+
+.eth-address-wrap {
+    word-break: break-all; /* Break words at arbitrary points to wrap text */
+    word-wrap: break-word; /* Allow long words to be broken and wrapped onto the next line */
+    white-space: normal; /* Ensure spans inside allow wrapping */
+    max-width: 100%; /* Ensure it does not overflow its container */
+}
+
+.eth-address-container {
+    max-width: 100%; /* Ensure the container does not overflow */
+    word-break: break-all; /* Break words at arbitrary points to wrap text */
 }

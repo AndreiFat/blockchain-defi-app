@@ -1,11 +1,11 @@
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials";
-import connectToDatabase from '../../libraries/mongodb';
-import User from '../../model/User';
+import connectToDatabase from '@/libraries/mongodb';
+import User from '@/model/User';
 import bcrypt from 'bcryptjs';
 
 export const authOptions = {
-
+    secret: process.env.AUTH_SECRET,
     providers: [
         CredentialsProvider({
 
