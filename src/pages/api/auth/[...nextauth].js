@@ -3,6 +3,7 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import connectToDatabase from '@/libraries/mongodb';
 import User from '@/model/User';
 import bcrypt from 'bcryptjs';
+import logger from "@/debbuging/logger";
 
 export const authOptions = {
     secret: process.env.AUTH_SECRET,
@@ -22,7 +23,8 @@ export const authOptions = {
                 const user = await User.findOne({email});
 
                 if (user && await bcrypt.compare(password, user.password)) {
-                    return {id: user._id, name: user.username, email: user.email};
+                    logger.info(user)
+                    return {name: user.username, email: user.email, ethAddress: user.ethAddress};
                 } else {
                     return null;
                 }

@@ -95,3 +95,7 @@ body {
     max-width: 100%; /* Ensure the container does not overflow */
     word-break: break-all; /* Break words at arbitrary points to wrap text */
 }
+
+.border-primary {
+    border-color: #3C38FF !important;
+}

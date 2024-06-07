@@ -8,6 +8,7 @@ import NotificationCard from "@/components/cards/NotificationCard";
 import {useEffect, useState} from "react";
 import Web3 from "@/services/web3";
 import Contract from "@/services/contract";
+import LoginBtn from "@/components/login-btn";
 
 const Home = () => {
     const {data: session, status} = useSession();
@@ -50,83 +51,6 @@ const Home = () => {
         }
     }
 
-    const createNewUserAddress = async () => {
-        const account = await contract.methods.owner().call();
-        setAccount(account);
-
-        try {
-            const newAccount = await createAndFundAccount();
-            console.log('Address:', newAccount.address);
-            console.log('Private Key:', newAccount.privateKey);
-            setUserAccount(newAccount);
-
-            const balanceInWei = await contract.methods.getBalance().call({from: newAccount.address});
-            const balance = Web3.utils.fromWei(balanceInWei, 'ether')
-            console.log('Balanta contului', balance);
-        } catch (error) {
-            console.error('Error creating and funding account:', error);
-        }
-    };
-
-    const createAndFundAccount = async () => {
-        const account = Web3.eth.accounts.create();
-        console.log('Created account:', account.address);
-
-        const fundAmount = '0.01'; // 0.01 Ether
-        const amountInWei = Web3.utils.toWei(fundAmount, 'ether');
-
-        const gasPrice = await Web3.eth.getGasPrice();
-        const gasLimit = 21000;
-
-        const tx = {
-            from: centralAccount,
-            to: account.address,
-            value: amountInWei,
-            gas: gasLimit,
-            gasPrice: gasPrice
-        };
-
-        try {
-            const signedTx = await Web3.eth.accounts.signTransaction(tx, centralAccountPrivateKey);
-            const receipt = await Web3.eth.sendSignedTransaction(signedTx.rawTransaction);
-            console.log('Funding transaction receipt:', receipt);
-            console.log('New account created and funded:', account.address);
-
-
-            // Initialize the balance in the smart contract
-            await initializeBalanceInContract(account, amountInWei);
-
-            return account;
-        } catch (error) {
-            console.error('Transaction error:', error);
-        }
-    };
-
-    const initializeBalanceInContract = async (accountCreated, amountInWei) => {
-        try {
-            // Get the owner's address from the contract
-            const ownerAddress = await contract.methods.owner().call();
-
-            console.log(`Initializing balance for ${accountCreated.address} with ${amountInWei} Wei`);
-
-            // Prepare the transaction data
-            const txData = contract.methods.initializeBalance(accountCreated.address, amountInWei).encodeABI();
-            // Sign the transaction using the owner's private key
-            const signedTx = await Web3.eth.accounts.signTransaction({
-                from: ownerAddress, // Sender's address (contract owner)
-                to: contractAddress, // Contract address
-                data: txData, // Transaction data
-                gas: 2100000, // Gas limit
-                gasPrice: await Web3.eth.getGasPrice() // Gas price
-            }, process.env.NEXT_PUBLIC_ACCOUNT_PRIVATE_KEY); // Owner's private key
-
-            // Send the signed transaction to the network
-            const receipt = await Web3.eth.sendSignedTransaction(signedTx.rawTransaction);
-            console.log('Initialize balance transaction receipt:', receipt);
-        } catch (error) {
-            console.error('Error during initializing balance:', error);
-        }
-    };
 
     const deposit = async (amountInEth) => {
         const amountInWei = Web3.utils.toWei(amountInEth.toString(), 'ether');
@@ -167,7 +91,7 @@ const Home = () => {
                 <link rel="icon" href="/assets/Logo-simple.svg"/>
             </Head>
             <main className={`${styles.main}`}>
-                <button onClick={createNewUserAddress}>generate new user address</button>
+                {/*<button onClick={createNewUserAddress}>generate new user address</button>*/}
 
                 <div>
                     <p>Balance: {balance} ETH</p>
@@ -176,7 +100,7 @@ const Home = () => {
                 </div>
 
                 <pre>{JSON.stringify(session, null, 2)}</pre>
-                {/*<LoginBtn/>*/}
+                <LoginBtn/>
 
                 <div className="row">
                     <div className="col-md-6">
