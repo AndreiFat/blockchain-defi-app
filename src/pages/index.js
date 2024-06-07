@@ -5,9 +5,65 @@ import MainLayout from "@/components/MainLayout"
 import MoneyStateCard from "@/components/cards/MoneyStateCard";
 import TextSideBySide from "@/components/text/TextSideBySide";
 import NotificationCard from "@/components/cards/NotificationCard";
+import {useEffect, useState} from "react";
+import Web3 from "@/services/web3";
+import Contract from "@/services/contract";
+import LoginBtn from "@/components/login-btn";
 
 const Home = () => {
     const {data: session, status} = useSession();
+    const [contract, setContract] = useState(Contract);
+    const [goalAmount, setGoalAmount] = useState(0);
+    const [depositAmount, setDepositAmount] = useState('');
+    const [account, setAccount] = useState(null)
+    const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS; // Paste your contract address here
+    const [userAccount, setUserAccount] = useState(null);
+    const [balance, setBalance] = useState('0');
+
+    const centralAccount = '0xDda92628F4090E966c878Bbc2087f010DB14229E';
+    const centralAccountPrivateKey = '0xa6fd3e495dc20a4717fa6bf8eb2b2e1c36e7bf5cd4c0e16e07c20550644816ca';
+
+    useEffect(() => {
+        console.log(contract)
+        if (contract) {
+            getBalanceOfContract();
+            getBalanceOfAnAddress()
+        }
+
+    }, [contract]);
+
+    const getBalanceOfContract = async () => {
+        try {
+            const balance = await contract.methods.getBalance().call();
+            console.log('Contract Balance:', balance);
+        } catch (error) {
+            console.error('Error fetching contract balance:', error);
+        }
+    };
+
+    const getBalanceOfAnAddress = async () => {
+        try {
+            const balanceInWei = await contract.methods.getBalance().call({from: '0xdD4A93CA8DDA29E1382A0b958637aD740580F9dF'});
+            const balance = Web3.utils.fromWei(balanceInWei, 'ether')
+            console.log('Balanta contului', balance);
+        } catch (error) {
+            console.error('Error fetching contract balance:', error);
+        }
+    }
+
+
+    const deposit = async (amountInEth) => {
+        const amountInWei = Web3.utils.toWei(amountInEth.toString(), 'ether');
+        await contract.methods.deposit().send({from: account, value: amountInWei});
+        await getBalanceOfContract(contract, account);
+    };
+
+    const withdraw = async (amountInEth) => {
+        const amountInWei = Web3.utils.toWei(amountInEth.toString(), 'ether');
+        await contract.methods.withdraw(amountInWei).send({from: account});
+        await getBalanceOfContract(contract, account);
+    };
+
     // if (!session) {
     //     return <>
     //         <Head>
@@ -35,8 +91,16 @@ const Home = () => {
                 <link rel="icon" href="/assets/Logo-simple.svg"/>
             </Head>
             <main className={`${styles.main}`}>
+                {/*<button onClick={createNewUserAddress}>generate new user address</button>*/}
+
+                <div>
+                    <p>Balance: {balance} ETH</p>
+                    <button onClick={() => deposit(1)}>Deposit 1 ETH</button>
+                    <button onClick={() => withdraw(1)}>Withdraw 1 ETH</button>
+                </div>
+
                 <pre>{JSON.stringify(session, null, 2)}</pre>
-                {/*<LoginBtn/>*/}
+                <LoginBtn/>
 
                 <div className="row">
                     <div className="col-md-6">

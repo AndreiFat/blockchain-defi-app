@@ -1,13 +1,92 @@
 import Link from "next/link";
 import {signIn, useSession} from "next-auth/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faUser} from "@fortawesome/free-solid-svg-icons";
+import {faCopy, faUser} from "@fortawesome/free-regular-svg-icons";
 import {useRouter} from "next/router";
+import {useEffect, useState} from "react";
+import Contract from "@/services/contract";
+import {truncateAddress} from "@/components/utils/truncateAddress";
+import {Toast, ToastContainer} from 'react-bootstrap';
+import {fetchUserData, getUserBalance} from "@/utilities/user/userData";
 
 export default function Navbar() {
     const router = useRouter();
     const {pathname} = router;
     const {data: session, status} = useSession();
+    const contract = Contract();
+    const [balance, setBalance] = useState('');
+    const [userData, setUserData] = useState({
+        name: "",
+        email: "",
+        ethAddress: "",
+    });
+    const [showToast, setShowToast] = useState(false);
+
+    useEffect(() => {
+        const fetchDataAndBalance = async () => {
+            const data = await fetchUserData(session);
+            setUserData(data);
+            if (data && data.ethAddress) {
+                const userBalance = await getUserBalance(data);
+                setBalance(userBalance);
+            }
+        };
+
+        if (session) {
+            fetchDataAndBalance();
+        }
+    }, [session]);
+
+    // const fetchUserData = async () => {
+    //     if (session) {
+    //         try {
+    //             const response = await fetch('/api/user');
+    //             if (response.ok) {
+    //                 const data = await response.json();
+    //                 setUserData(data.user);
+    //             } else {
+    //                 console.error('Failed to fetch user data:', response.statusText);
+    //             }
+    //         } catch (error) {
+    //             console.error('Error fetching user data:', error);
+    //         }
+    //     }
+    // };
+    //
+    // const getUserBalance = async () => {
+    //     if (!userData || !userData.ethAddress) {
+    //         console.error('Error: userData or userData.ethAddress is not defined.');
+    //         return;
+    //     }
+    //
+    //     let ethAddress = userData.ethAddress;
+    //     if (!ethAddress.startsWith('0x')) {
+    //         ethAddress = '0x' + ethAddress;
+    //     }
+    //
+    //     console.log('Using Ethereum address:', ethAddress);
+    //
+    //     try {
+    //         const balanceInWei = await contract.methods.getBalance().call({from: ethAddress});
+    //         const balanceAmount = Web3.utils.fromWei(balanceInWei, 'ether');
+    //         setBalance(balanceAmount);
+    //         console.log('User balance:', balanceAmount);
+    //     } catch (error) {
+    //         console.error('Error fetching balance:', error);
+    //     }
+    // };
+
+    const handleCopyClick = async (event) => {
+        event.preventDefault(); // Prevent the default link behavior
+        const textToCopy = userData.ethAddress;
+        try {
+            await navigator.clipboard.writeText(textToCopy);
+            setShowToast(true);
+            setTimeout(() => setShowToast(false), 2000); // Hide toast after 2 seconds
+        } catch (err) {
+            console.error('Failed to copy: ', err);
+        }
+    };
 
     return <>
         <div className="nav-dark" data-bs-theme="dark">
@@ -58,15 +137,20 @@ export default function Navbar() {
                                     <li className="nav-item">
                                         <a className="nav-link d-flex align-content-center" href="#"><img
                                             src={"/assets/3DIcons/wallet-front-color.png"}
-                                            alt="ETH Wallet Address" height={24}/><span className={"ms-2 fs-6"}>eth address</span></a>
+                                            alt="ETH Wallet Address" height={24}/><span
+                                            className={"ms-2 fs-6"}
+                                            onClick={handleCopyClick}
+                                        >{truncateAddress(userData.ethAddress)}
+                                            <FontAwesomeIcon className={"ms-2"} icon={faCopy}/></span></a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link d-flex align-content-center" href="#"><img
+                                        <span className="nav-link d-flex align-content-center"><img
                                             src={"/assets/3DIcons/eth-front-color.svg"}
-                                            alt="ETH Amount" height={24}/><span className={"ms-2 fs-6"}>eth</span></a>
+                                            alt="ETH Amount" height={24}/><span
+                                            className={"ms-2 fs-6"}>{balance} ETH</span></span>
                                     </li>
                                     <li className="nav-item dropdown">
-                                        <a className="nav-link border border-secondary px-3 rounded-4" href="#"
+                                        <a className="nav-link border border-secondary px-3 rounded-3" href="#"
                                            role="button"
                                            data-bs-toggle="dropdown"
                                            aria-expanded="false"
@@ -87,6 +171,16 @@ export default function Navbar() {
                     </div>
                 </div>
             </nav>
+
+            <ToastContainer position="bottom-end" className="p-3">
+                <Toast className={"border-0 rounded-2 rounded-bottom-0"} onClose={() => setShowToast(false)}
+                       show={showToast} delay={2500} autohide>
+                    <Toast.Header className={"rounded-2 rounded-bottom-0 border-primary border-bottom-3"}>
+                        <strong className="me-auto">Address was copied to clipboard</strong>
+                    </Toast.Header>
+                    {/*<Toast.Body></Toast.Body>*/}
+                </Toast>
+            </ToastContainer>
         </div>
     </>
 }

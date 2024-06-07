@@ -1,0 +1,322 @@
+2024-06-07 11:29:20 info: null
+2024-06-07 11:30:16 info: null
+2024-06-07 11:30:16 info: Created account:
+2024-06-07 11:30:16 info: Funding transaction receipt:
+2024-06-07 11:30:16 info: New account created and funded:
+2024-06-07 11:30:16 error: TypeError: Cannot read properties of undefined (reading 'owner')
+    at initializeBalanceInContract (webpack-internal:///(api)/./src/pages/api/register.js:108:103)
+    at createAndFundAccount (webpack-internal:///(api)/./src/pages/api/register.js:99:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async createNewUserAddress (webpack-internal:///(api)/./src/pages/api/register.js:66:28)
+    at async handler (webpack-internal:///(api)/./src/pages/api/register.js:43:25)
+    at async K (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/compiled/next-server/pages-api.runtime.dev.js:21:2871)
+    at async U.render (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/compiled/next-server/pages-api.runtime.dev.js:21:3955)
+    at async DevServer.runApi (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/next-server.js:600:9)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/next-server.js:269:37)
+    at async DevServer.handleRequestImpl (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/base-server.js:816:17)
+    at async /Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/dev/next-dev-server.js:339:20
+    at async Span.traceAsyncFn (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/trace/trace.js:154:20)
+    at async DevServer.handleRequest (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/dev/next-dev-server.js:336:24)
+    at async invokeRender (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/lib/router-server.js:174:21)
+    at async handleRequest (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/lib/router-server.js:353:24)
+2024-06-07 11:30:16 info: Address:
+2024-06-07 11:30:16 info: Private Key:
+2024-06-07 11:30:16 error: TypeError: Cannot read properties of undefined (reading 'getBalance')
+    at createNewUserAddress (webpack-internal:///(api)/./src/pages/api/register.js:69:103)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async handler (webpack-internal:///(api)/./src/pages/api/register.js:43:25)
+    at async K (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/compiled/next-server/pages-api.runtime.dev.js:21:2871)
+    at async U.render (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/compiled/next-server/pages-api.runtime.dev.js:21:3955)
+    at async DevServer.runApi (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/next-server.js:600:9)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/next-server.js:269:37)
+    at async DevServer.handleRequestImpl (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/base-server.js:816:17)
+    at async /Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/dev/next-dev-server.js:339:20
+    at async Span.traceAsyncFn (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/trace/trace.js:154:20)
+    at async DevServer.handleRequest (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/dev/next-dev-server.js:336:24)
+    at async invokeRender (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/lib/router-server.js:174:21)
+    at async handleRequest (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/lib/router-server.js:353:24)
+    at async requestHandlerImpl (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/lib/router-server.js:377:13)
+    at async Server.requestListener (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/lib/start-server.js:141:13)
+2024-06-07 11:33:17 info: null
+2024-06-07 11:33:17 info: Created account:
+2024-06-07 11:33:17 info: Funding transaction receipt:
+2024-06-07 11:33:17 info: New account created and funded: 0x499A6Ef85B4625aC9Aef10FEA2a3B9bC94bE91B2
+2024-06-07 11:33:17 info: [object Object]
+2024-06-07 11:33:17 error: TypeError: Cannot read properties of undefined (reading 'owner')
+    at initializeBalanceInContract (webpack-internal:///(api)/./src/pages/api/register.js:109:103)
+    at createAndFundAccount (webpack-internal:///(api)/./src/pages/api/register.js:99:15)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async createNewUserAddress (webpack-internal:///(api)/./src/pages/api/register.js:66:28)
+    at async handler (webpack-internal:///(api)/./src/pages/api/register.js:43:25)
+    at async K (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/compiled/next-server/pages-api.runtime.dev.js:21:2871)
+    at async U.render (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/compiled/next-server/pages-api.runtime.dev.js:21:3955)
+    at async DevServer.runApi (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/next-server.js:600:9)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/next-server.js:269:37)
+    at async DevServer.handleRequestImpl (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/base-server.js:816:17)
+    at async /Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/dev/next-dev-server.js:339:20
+    at async Span.traceAsyncFn (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/trace/trace.js:154:20)
+    at async DevServer.handleRequest (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/dev/next-dev-server.js:336:24)
+    at async invokeRender (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/lib/router-server.js:174:21)
+    at async handleRequest (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/lib/router-server.js:353:24)
+2024-06-07 11:33:17 info: Address:
+2024-06-07 11:33:17 info: Private Key:
+2024-06-07 11:33:17 error: TypeError: Cannot read properties of undefined (reading 'getBalance')
+    at createNewUserAddress (webpack-internal:///(api)/./src/pages/api/register.js:69:103)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async handler (webpack-internal:///(api)/./src/pages/api/register.js:43:25)
+    at async K (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/compiled/next-server/pages-api.runtime.dev.js:21:2871)
+    at async U.render (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/compiled/next-server/pages-api.runtime.dev.js:21:3955)
+    at async DevServer.runApi (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/next-server.js:600:9)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/next-server.js:269:37)
+    at async DevServer.handleRequestImpl (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/base-server.js:816:17)
+    at async /Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/dev/next-dev-server.js:339:20
+    at async Span.traceAsyncFn (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/trace/trace.js:154:20)
+    at async DevServer.handleRequest (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/dev/next-dev-server.js:336:24)
+    at async invokeRender (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/lib/router-server.js:174:21)
+    at async handleRequest (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/lib/router-server.js:353:24)
+    at async requestHandlerImpl (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/lib/router-server.js:377:13)
+    at async Server.requestListener (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/lib/start-server.js:141:13)
+2024-06-07 11:34:38 info: null
+2024-06-07 11:34:38 info: Created account:
+2024-06-07 11:34:38 info: Funding transaction receipt:
+2024-06-07 11:34:38 info: New account created and funded: 0x27F8229818D4f1c9eE7906C23Ae7C39372944D3E
+2024-06-07 11:34:38 info: Initializing balance for 0x27F8229818D4f1c9eE7906C23Ae7C39372944D3E with 10000000000000000 Wei
+2024-06-07 11:34:38 info: Initialize balance transaction receipt:
+2024-06-07 11:34:38 info: Address:
+2024-06-07 11:34:38 info: Private Key:
+2024-06-07 11:34:38 info: Balanta contului
+2024-06-07 11:36:45 info: null
+2024-06-07 11:36:45 info: Created account: 0x61c0ED6eD3Fd021c682510981Fb552F2D9dF2DfD
+2024-06-07 11:36:45 info: Funding transaction receipt:
+2024-06-07 11:36:45 info: New account created and funded: 0x61c0ED6eD3Fd021c682510981Fb552F2D9dF2DfD
+2024-06-07 11:36:45 info: Initializing balance for 0x61c0ED6eD3Fd021c682510981Fb552F2D9dF2DfD with 10000000000000000 Wei
+2024-06-07 11:36:45 info: Initialize balance transaction receipt:
+2024-06-07 11:36:45 info: Address: 0x61c0ED6eD3Fd021c682510981Fb552F2D9dF2DfD
+2024-06-07 11:36:45 info: Private Key: 0x1e3a3a1fa2523d66d11cb65f2f4d52d261862634838e5d9ae03c4180eb9d03a0
+2024-06-07 11:36:45 info: Balanta contului
+2024-06-07 11:37:27 info: null
+2024-06-07 11:37:27 info: Created account: 0x8A5F6b510cf5f93314B0c307E83C56B528124825
+2024-06-07 11:37:27 info: Funding transaction receipt:
+2024-06-07 11:37:27 info: New account created and funded: 0x8A5F6b510cf5f93314B0c307E83C56B528124825
+2024-06-07 11:37:27 info: Initializing balance for 0x8A5F6b510cf5f93314B0c307E83C56B528124825 with 10000000000000000 Wei
+2024-06-07 11:37:27 info: Initialize balance transaction receipt:
+2024-06-07 11:37:27 info: Address: 0x8A5F6b510cf5f93314B0c307E83C56B528124825
+2024-06-07 11:37:27 info: Private Key: 0xae27affe06cab1bf70ac62c6ac18048afd71a0fe8e8b437b5830d9b9206a8a1d
+2024-06-07 11:37:27 info: Balanta contului
+2024-06-07 11:40:17 info: null
+2024-06-07 11:40:17 info: Created account: 0xD0BDcEC64ad4e99E9bCdb7c26D97Fd51Ee516C82
+2024-06-07 11:40:17 info: Funding transaction receipt:
+2024-06-07 11:40:17 info: New account created and funded: 0xD0BDcEC64ad4e99E9bCdb7c26D97Fd51Ee516C82
+2024-06-07 11:40:17 info: Initializing balance for 0xD0BDcEC64ad4e99E9bCdb7c26D97Fd51Ee516C82 with 10000000000000000 Wei
+2024-06-07 11:40:17 info: Initialize balance transaction receipt:
+2024-06-07 11:40:17 info: Address: 0xD0BDcEC64ad4e99E9bCdb7c26D97Fd51Ee516C82
+2024-06-07 11:40:17 info: Private Key: 0xd6ce701d892c7ab424f2c241d4e0c2caa8ffe9e2188aa9d14c2113851d7ede12
+2024-06-07 11:40:17 info: Balanta contului
+2024-06-07 11:40:17 info: private key: 0xd6ce701d892c7ab424f2c241d4e0c2caa8ffe9e2188aa9d14c2113851d7ede12
+2024-06-07 11:44:33 info: null
+2024-06-07 11:44:33 info: Created account: 0x242D44f9c871009675A8224b70e0d6fBAB2FA134
+2024-06-07 11:44:33 info: Funding transaction receipt:
+2024-06-07 11:44:33 info: New account created and funded: 0x242D44f9c871009675A8224b70e0d6fBAB2FA134
+2024-06-07 11:44:33 info: Initializing balance for 0x242D44f9c871009675A8224b70e0d6fBAB2FA134 with 10000000000000000 Wei
+2024-06-07 11:44:33 info: Initialize balance transaction receipt:
+2024-06-07 11:44:33 info: Address: 0x242D44f9c871009675A8224b70e0d6fBAB2FA134
+2024-06-07 11:44:33 info: Private Key: 0x66c46ba70686e9e79f029a9a9b26a5f8230ca4d40d34abd9a816db26e8bc2620
+2024-06-07 11:44:33 info: Balanta contului
+2024-06-07 11:44:33 info: private key: 0x66c46ba70686e9e79f029a9a9b26a5f8230ca4d40d34abd9a816db26e8bc2620
+2024-06-07 11:44:33 error: RangeError: Invalid key length
+    at Cipheriv.createCipherBase (node:internal/crypto/cipher:121:19)
+    at Cipheriv.createCipherWithIV (node:internal/crypto/cipher:140:3)
+    at new Cipheriv (node:internal/crypto/cipher:243:3)
+    at Object.createCipheriv (node:crypto:146:10)
+    at encrypt (webpack-internal:///(api)/./src/components/utils/encryptionFunctions.js:17:68)
+    at handler (webpack-internal:///(api)/./src/pages/api/register.js:46:115)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async K (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/compiled/next-server/pages-api.runtime.dev.js:21:2871)
+    at async U.render (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/compiled/next-server/pages-api.runtime.dev.js:21:3955)
+    at async DevServer.runApi (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/next-server.js:600:9)
+    at async NextNodeServer.handleCatchallRenderRequest (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/next-server.js:269:37)
+    at async DevServer.handleRequestImpl (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/base-server.js:816:17)
+    at async /Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/dev/next-dev-server.js:339:20
+    at async Span.traceAsyncFn (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/trace/trace.js:154:20)
+    at async DevServer.handleRequest (/Users/andreifat/Developer/GitHubProjects/blockchain-defi-app/node_modules/next/dist/server/dev/next-dev-server.js:336:24)
+2024-06-07 11:46:18 info: null
+2024-06-07 11:46:18 info: Created account: 0xb323889377327eC091Fc6EAAe88F8DbC31AED5f0
+2024-06-07 11:46:18 info: Funding transaction receipt:
+2024-06-07 11:46:18 info: New account created and funded: 0xb323889377327eC091Fc6EAAe88F8DbC31AED5f0
+2024-06-07 11:46:18 info: Initializing balance for 0xb323889377327eC091Fc6EAAe88F8DbC31AED5f0 with 10000000000000000 Wei
+2024-06-07 11:46:19 info: Initialize balance transaction receipt:
+2024-06-07 11:46:19 info: Address: 0xb323889377327eC091Fc6EAAe88F8DbC31AED5f0
+2024-06-07 11:46:19 info: Private Key: 0x50553a8be265e92835f600aa7ad06bb357152c35af1c449438b1a5945c1ccca6
+2024-06-07 11:46:19 info: Balanta contului
+2024-06-07 11:46:19 info: private key: 0x50553a8be265e92835f600aa7ad06bb357152c35af1c449438b1a5945c1ccca6
+2024-06-07 11:46:19 info: the account was successfuly accesed into the register
+2024-06-07 11:46:51 info: null
+2024-06-07 11:46:51 info: Created account: 0x3f916b04Cf4D29e6Ca9A1AAcf5988f727f3c1d64
+2024-06-07 11:46:51 info: Funding transaction receipt:
+2024-06-07 11:46:51 info: New account created and funded: 0x3f916b04Cf4D29e6Ca9A1AAcf5988f727f3c1d64
+2024-06-07 11:46:51 info: Initializing balance for 0x3f916b04Cf4D29e6Ca9A1AAcf5988f727f3c1d64 with 10000000000000000 Wei
+2024-06-07 11:46:51 info: Initialize balance transaction receipt:
+2024-06-07 11:46:51 info: Address: 0x3f916b04Cf4D29e6Ca9A1AAcf5988f727f3c1d64
+2024-06-07 11:46:51 info: Private Key: 0x77de1185ae489a80762ad3feffdbea8f3fb1b7953697f1489d34efd3e77f3560
+2024-06-07 11:46:51 info: Balanta contului
+2024-06-07 11:46:51 info: private key: 0x77de1185ae489a80762ad3feffdbea8f3fb1b7953697f1489d34efd3e77f3560
+2024-06-07 11:46:51 info: the account was successfuly accesed into the register
+2024-06-07 11:51:54 info: null
+2024-06-07 11:51:54 info: Created account: 0x5C2Fca4aDb957Eb05cb24f2eBe3cBdeAD8Fe9D8B
+2024-06-07 11:51:54 info: Funding transaction receipt:
+2024-06-07 11:51:54 info: New account created and funded: 0x5C2Fca4aDb957Eb05cb24f2eBe3cBdeAD8Fe9D8B
+2024-06-07 11:51:54 info: Initializing balance for 0x5C2Fca4aDb957Eb05cb24f2eBe3cBdeAD8Fe9D8B with 10000000000000000 Wei
+2024-06-07 11:51:54 info: Initialize balance transaction receipt:
+2024-06-07 11:51:54 info: Address: 0x5C2Fca4aDb957Eb05cb24f2eBe3cBdeAD8Fe9D8B
+2024-06-07 11:51:54 info: Private Key: 0x1df4cfb351948ef957affc31e2b029dd73e1856a7bbced5a48d8572fd1c1d0bf
+2024-06-07 11:51:54 info: Balanta contului
+2024-06-07 11:51:54 info: private key: 0x1df4cfb351948ef957affc31e2b029dd73e1856a7bbced5a48d8572fd1c1d0bf
+2024-06-07 11:51:54 info: the account was successfuly accesed into the register
+2024-06-07 11:59:52 info: null
+2024-06-07 11:59:52 info: Created account: 0x33D69CDd8c40111CBF0D1A5385B5175aa141678f
+2024-06-07 11:59:52 info: Funding transaction receipt:
+2024-06-07 11:59:52 info: New account created and funded: 0x33D69CDd8c40111CBF0D1A5385B5175aa141678f
+2024-06-07 11:59:52 info: Initializing balance for 0x33D69CDd8c40111CBF0D1A5385B5175aa141678f with 10000000000000000 Wei
+2024-06-07 11:59:52 info: Initialize balance transaction receipt:
+2024-06-07 11:59:52 info: Address: 0x33D69CDd8c40111CBF0D1A5385B5175aa141678f
+2024-06-07 11:59:52 info: Private Key: 0xae154ae7a7ead75080650dbd035c8bf1feaa8e2cb2e424a5aebbbffb11912498
+2024-06-07 11:59:52 info: Balanta contului
+2024-06-07 11:59:52 info: private key: 0xae154ae7a7ead75080650dbd035c8bf1feaa8e2cb2e424a5aebbbffb11912498
+2024-06-07 11:59:52 info: the account was successfuly accesed into the register
+2024-06-07 11:59:52 info: {
+  username: 'Andrei Făt',
+  email: 'andrei.fat@outlook.com',
+  password: '$2a$10$KrAUI.c3vF0UpHVuy71uw.g5yWsZdl/gPTkxK.sHYnTaolVTgI3Tm',
+  _id: new ObjectId('6662cc0848898d71c79eda5a')
+}
+2024-06-07 12:01:01 info: null
+2024-06-07 12:01:01 info: Created account: 0x118c25884FEd1F404F11A7AF3a7b1c1087161F7a
+2024-06-07 12:01:01 info: Funding transaction receipt:
+2024-06-07 12:01:01 info: New account created and funded: 0x118c25884FEd1F404F11A7AF3a7b1c1087161F7a
+2024-06-07 12:01:01 info: Initializing balance for 0x118c25884FEd1F404F11A7AF3a7b1c1087161F7a with 10000000000000000 Wei
+2024-06-07 12:01:01 info: Initialize balance transaction receipt:
+2024-06-07 12:01:01 info: Address: 0x118c25884FEd1F404F11A7AF3a7b1c1087161F7a
+2024-06-07 12:01:01 info: Private Key: 0xa4975af6c4848a0b7f59d62b5759cedc8254fb3dc3cd30fbe2fb16faa33de888
+2024-06-07 12:01:01 info: Balanta contului
+2024-06-07 12:01:01 info: private key: 0xa4975af6c4848a0b7f59d62b5759cedc8254fb3dc3cd30fbe2fb16faa33de888
+2024-06-07 12:01:01 info: the account was successfuly accesed into the register
+2024-06-07 12:01:01 info: {
+  username: 'Andrei Făt',
+  email: 'andrei.fat@outlook.com',
+  password: '$2a$10$yK8fjH.ageX1p5tKB8oCp.xZ/2izBCXxSvrgiaBDciNaGk.WaVWtW',
+  ethAddress: '0x118c25884FEd1F404F11A7AF3a7b1c1087161F7a',
+  privateKey: 'f31009ce3ed2441cb21e8bf1a1fb04d1:399b7fd3879be9496bc3e689b373a384709f3e15401b831560d6fbcc5bbc91d771572e3db913c668a5a5f71814c92e57a6444d8c76bdb86e764134870ffcda8d758713d439d0ba1686f89e964006ffd0',
+  _id: new ObjectId('6662cc4d0fa11e3eaf6896b6')
+}
+2024-06-07 12:10:00 info: null
+2024-06-07 12:10:00 info: Created account: 0x94524024D79a9A15B754405fcf686e1412eCC747
+2024-06-07 12:10:00 info: Funding transaction receipt:
+2024-06-07 12:10:00 info: New account created and funded: 0x94524024D79a9A15B754405fcf686e1412eCC747
+2024-06-07 12:10:00 info: Initializing balance for 0x94524024D79a9A15B754405fcf686e1412eCC747 with 10000000000000000 Wei
+2024-06-07 12:10:00 info: Initialize balance transaction receipt:
+2024-06-07 12:10:00 info: Address: 0x94524024D79a9A15B754405fcf686e1412eCC747
+2024-06-07 12:10:00 info: Private Key: 0xcfad2d9e7ee774a2204b704283222d599d948348005976f844a55dd07f256a8e
+2024-06-07 12:10:00 info: Balanta contului
+2024-06-07 12:10:00 info: private key: 0xcfad2d9e7ee774a2204b704283222d599d948348005976f844a55dd07f256a8e
+2024-06-07 12:10:00 info: the account was successfuly accesed into the register
+2024-06-07 12:10:00 info: {
+  username: 'Andrei Făt',
+  email: 'andrei.fat@outlook.com',
+  password: '$2a$10$l3q2KwqcVAms4gHawLghzO9oZa9Xbl64S5Y991NQYXKb4ulFn0uRe',
+  ethAddress: '0x94524024D79a9A15B754405fcf686e1412eCC747',
+  privateKey: '29e9f5096c12c0538512c915a8142983:d537c63f018bd621aa6a2775a0a78d17a850718ec426a62df85f8a28eaa001d4693e81060d88cd6e0c55941c800658485653df750bac6da952f66808622b0b5fac13bff6978f6f7b38b24ceb78a4b373',
+  _id: new ObjectId('6662ce680fa11e3eaf6896b9')
+}
+2024-06-07 12:10:52 info: null
+2024-06-07 12:11:13 info: null
+2024-06-07 12:11:13 info: Created account: 0x6e569a664CeB6F9f09c59e31e5d2FCD8E3d1Ff26
+2024-06-07 12:11:13 info: Funding transaction receipt:
+2024-06-07 12:11:13 info: New account created and funded: 0x6e569a664CeB6F9f09c59e31e5d2FCD8E3d1Ff26
+2024-06-07 12:11:13 info: Initializing balance for 0x6e569a664CeB6F9f09c59e31e5d2FCD8E3d1Ff26 with 10000000000000000 Wei
+2024-06-07 12:11:13 info: Initialize balance transaction receipt:
+2024-06-07 12:11:13 info: Address: 0x6e569a664CeB6F9f09c59e31e5d2FCD8E3d1Ff26
+2024-06-07 12:11:13 info: Private Key: 0xe2601d8d2451aa4f6f86f5a5e7e90976935f0e61d651dd3fd546c001728c51a7
+2024-06-07 12:11:13 info: Balanta contului
+2024-06-07 12:11:13 info: private key: 0xe2601d8d2451aa4f6f86f5a5e7e90976935f0e61d651dd3fd546c001728c51a7
+2024-06-07 12:11:13 info: the account was successfuly accesed into the register
+2024-06-07 12:11:13 info: {
+  username: 'Andrei Făt',
+  email: 'fatandrei57@gmail.com',
+  password: '$2a$10$2yzLx6IKO64FoMTlHD89VecT9Kcn6SvN2PgCHkPl.HUXd/vT9lsYm',
+  ethAddress: '0x6e569a664CeB6F9f09c59e31e5d2FCD8E3d1Ff26',
+  privateKey: '3d0e7df7dde4e650e46447c5ea2c489c:e1bdc2346b96189554ec679aae8b173ca74df78f4df913f03662e37b530f4bb343b9c92c5b23fc5ebb3db978d93a8eb5a9955e8274ca4b5ddb8e82747003e5b937a760277c81bdaf32d354ca065236ba',
+  _id: new ObjectId('6662ceb10fa11e3eaf6896be')
+}
+2024-06-07 12:15:58 info: {
+  _id: new ObjectId('6662ceb10fa11e3eaf6896be'),
+  username: 'Andrei Făt',
+  email: 'fatandrei57@gmail.com',
+  password: '$2a$10$2yzLx6IKO64FoMTlHD89VecT9Kcn6SvN2PgCHkPl.HUXd/vT9lsYm',
+  ethAddress: '0x6e569a664CeB6F9f09c59e31e5d2FCD8E3d1Ff26',
+  privateKey: '3d0e7df7dde4e650e46447c5ea2c489c:e1bdc2346b96189554ec679aae8b173ca74df78f4df913f03662e37b530f4bb343b9c92c5b23fc5ebb3db978d93a8eb5a9955e8274ca4b5ddb8e82747003e5b937a760277c81bdaf32d354ca065236ba',
+  __v: 0
+}
+2024-06-07 12:21:28 info: {
+  _id: new ObjectId('6662ceb10fa11e3eaf6896be'),
+  username: 'Andrei Făt',
+  email: 'fatandrei57@gmail.com',
+  password: '$2a$10$2yzLx6IKO64FoMTlHD89VecT9Kcn6SvN2PgCHkPl.HUXd/vT9lsYm',
+  ethAddress: '0x6e569a664CeB6F9f09c59e31e5d2FCD8E3d1Ff26',
+  privateKey: '3d0e7df7dde4e650e46447c5ea2c489c:e1bdc2346b96189554ec679aae8b173ca74df78f4df913f03662e37b530f4bb343b9c92c5b23fc5ebb3db978d93a8eb5a9955e8274ca4b5ddb8e82747003e5b937a760277c81bdaf32d354ca065236ba',
+  __v: 0
+}
+2024-06-07 12:22:09 info: {
+  _id: new ObjectId('6662ceb10fa11e3eaf6896be'),
+  username: 'Andrei Făt',
+  email: 'fatandrei57@gmail.com',
+  password: '$2a$10$2yzLx6IKO64FoMTlHD89VecT9Kcn6SvN2PgCHkPl.HUXd/vT9lsYm',
+  ethAddress: '0x6e569a664CeB6F9f09c59e31e5d2FCD8E3d1Ff26',
+  privateKey: '3d0e7df7dde4e650e46447c5ea2c489c:e1bdc2346b96189554ec679aae8b173ca74df78f4df913f03662e37b530f4bb343b9c92c5b23fc5ebb3db978d93a8eb5a9955e8274ca4b5ddb8e82747003e5b937a760277c81bdaf32d354ca065236ba',
+  __v: 0
+}
+2024-06-07 12:28:08 info: null
+2024-06-07 12:28:08 info: Created account: 0x0F76e7Fa227E065Ca791Ae894538eEfEfa7614e7
+2024-06-07 12:28:08 info: Funding transaction receipt:
+2024-06-07 12:28:08 info: New account created and funded: 0x0F76e7Fa227E065Ca791Ae894538eEfEfa7614e7
+2024-06-07 12:28:08 info: Initializing balance for 0x0F76e7Fa227E065Ca791Ae894538eEfEfa7614e7 with 10000000000000000 Wei
+2024-06-07 12:28:08 info: Initialize balance transaction receipt:
+2024-06-07 12:28:08 info: Address: 0x0F76e7Fa227E065Ca791Ae894538eEfEfa7614e7
+2024-06-07 12:28:08 info: Private Key: 0xb0c1ef1e49d36cc7a72ae9c558f6de1c2864c9cbe095d95539323e182000365b
+2024-06-07 12:28:08 info: Balanta contului
+2024-06-07 12:28:08 info: private key: 0xb0c1ef1e49d36cc7a72ae9c558f6de1c2864c9cbe095d95539323e182000365b
+2024-06-07 12:28:08 info: the account was successfuly accesed into the register
+2024-06-07 12:28:08 info: {
+  username: 'Andrei Făt',
+  email: 'fatandrei57@gmail.com',
+  password: '$2a$10$YZuBPY0D6npunSrxe9TSk.XMmi3SUkUSTUin33ypHHOwwU1fCD3CG',
+  ethAddress: '0x0F76e7Fa227E065Ca791Ae894538eEfEfa7614e7',
+  privateKey: '362f40d0d75f4681d2d53f2bc1fa1128:b6842f5e6440f6fa423d3cf4236e050ac15da49814987823332ef13dcc17b97a1362312b609f9af9f03baec7e52af339ee100d317fd471d8c3a243291683e729ed0129b08b6c66fd90c5f09b82253c44',
+  _id: new ObjectId('6662d2a819ecd253225ebaad')
+}
+2024-06-07 12:28:09 info: {
+  _id: new ObjectId('6662d2a819ecd253225ebaad'),
+  username: 'Andrei Făt',
+  email: 'fatandrei57@gmail.com',
+  password: '$2a$10$YZuBPY0D6npunSrxe9TSk.XMmi3SUkUSTUin33ypHHOwwU1fCD3CG',
+  ethAddress: '0x0F76e7Fa227E065Ca791Ae894538eEfEfa7614e7',
+  privateKey: '362f40d0d75f4681d2d53f2bc1fa1128:b6842f5e6440f6fa423d3cf4236e050ac15da49814987823332ef13dcc17b97a1362312b609f9af9f03baec7e52af339ee100d317fd471d8c3a243291683e729ed0129b08b6c66fd90c5f09b82253c44',
+  __v: 0
+}
+2024-06-07 12:34:20 info: {
+  _id: new ObjectId('6662d2a819ecd253225ebaad'),
+  username: 'Andrei Făt',
+  email: 'fatandrei57@gmail.com',
+  password: '$2a$10$YZuBPY0D6npunSrxe9TSk.XMmi3SUkUSTUin33ypHHOwwU1fCD3CG',
+  ethAddress: '0x0F76e7Fa227E065Ca791Ae894538eEfEfa7614e7',
+  privateKey: '362f40d0d75f4681d2d53f2bc1fa1128:b6842f5e6440f6fa423d3cf4236e050ac15da49814987823332ef13dcc17b97a1362312b609f9af9f03baec7e52af339ee100d317fd471d8c3a243291683e729ed0129b08b6c66fd90c5f09b82253c44',
+  __v: 0
+}
+2024-06-07 18:08:42 info: {
+  _id: new ObjectId('6662d2a819ecd253225ebaad'),
+  username: 'Andrei Făt',
+  email: 'fatandrei57@gmail.com',
+  password: '$2a$10$YZuBPY0D6npunSrxe9TSk.XMmi3SUkUSTUin33ypHHOwwU1fCD3CG',
+  ethAddress: '0x0F76e7Fa227E065Ca791Ae894538eEfEfa7614e7',
+  privateKey: '362f40d0d75f4681d2d53f2bc1fa1128:b6842f5e6440f6fa423d3cf4236e050ac15da49814987823332ef13dcc17b97a1362312b609f9af9f03baec7e52af339ee100d317fd471d8c3a243291683e729ed0129b08b6c66fd90c5f09b82253c44',
+  __v: 0
+}
