@@ -6,8 +6,8 @@ import Web3 from "@/services/web3";
 import Contract from "@/services/contract";
 import logger from '@/debbuging/logger';
 
-const centralAccount = '0xDda92628F4090E966c878Bbc2087f010DB14229E';
-const centralAccountPrivateKey = '0xa6fd3e495dc20a4717fa6bf8eb2b2e1c36e7bf5cd4c0e16e07c20550644816ca';
+const centralAccount = '0x17840877aB8335887E74C2Be0F6baB218d568De7';
+const centralAccountPrivateKey = '0x7dc8ddca86150bd5da379924a888d7ba28c38a43f436cf2eab887e569294c5ab';
 const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS; // Paste your contract address here
 const contract = Contract();
 export default async function handler(req, res) {
@@ -40,7 +40,7 @@ export default async function handler(req, res) {
         await newUser.save();
         return res.status(201).json({message: 'User registered successfully'});
     } catch (error) {
-        return res.status(500).json({message: error});
+        return res.status(500).json({message: "Internal server error"});
     }
 }
 
