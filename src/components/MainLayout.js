@@ -1,7 +1,7 @@
 import Navbar from './navbar'
 import Footer from './footer'
 
-export default function AuthLayout({children}) {
+export default function MainLayout({children}) {
     return (
         <>
             <Navbar/>

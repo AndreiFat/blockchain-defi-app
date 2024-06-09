@@ -14,7 +14,7 @@ export default function Navbar() {
     const {pathname} = router;
     const {data: session, status} = useSession();
     const contract = Contract();
-    const [balance, setBalance] = useState('');
+    const [balance, setBalance] = useState(null);
     const [userData, setUserData] = useState({
         name: "",
         email: "",
@@ -28,7 +28,10 @@ export default function Navbar() {
             setUserData(data);
             if (data && data.ethAddress) {
                 const userBalance = await getUserBalance(data);
-                setBalance(userBalance);
+
+                console.log(typeof userBalance)
+                const balance = parseFloat(userBalance)
+                setBalance(balance.toFixed(3));
             }
         };
 
@@ -36,45 +39,6 @@ export default function Navbar() {
             fetchDataAndBalance();
         }
     }, [session]);
-
-    // const fetchUserData = async () => {
-    //     if (session) {
-    //         try {
-    //             const response = await fetch('/api/user');
-    //             if (response.ok) {
-    //                 const data = await response.json();
-    //                 setUserData(data.user);
-    //             } else {
-    //                 console.error('Failed to fetch user data:', response.statusText);
-    //             }
-    //         } catch (error) {
-    //             console.error('Error fetching user data:', error);
-    //         }
-    //     }
-    // };
-    //
-    // const getUserBalance = async () => {
-    //     if (!userData || !userData.ethAddress) {
-    //         console.error('Error: userData or userData.ethAddress is not defined.');
-    //         return;
-    //     }
-    //
-    //     let ethAddress = userData.ethAddress;
-    //     if (!ethAddress.startsWith('0x')) {
-    //         ethAddress = '0x' + ethAddress;
-    //     }
-    //
-    //     console.log('Using Ethereum address:', ethAddress);
-    //
-    //     try {
-    //         const balanceInWei = await contract.methods.getBalance().call({from: ethAddress});
-    //         const balanceAmount = Web3.utils.fromWei(balanceInWei, 'ether');
-    //         setBalance(balanceAmount);
-    //         console.log('User balance:', balanceAmount);
-    //     } catch (error) {
-    //         console.error('Error fetching balance:', error);
-    //     }
-    // };
 
     const handleCopyClick = async (event) => {
         event.preventDefault(); // Prevent the default link behavior

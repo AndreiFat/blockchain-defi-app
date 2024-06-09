@@ -71,6 +71,12 @@ body {
     border-radius: 14px !important;
 }
 
+.btn-success {
+    padding-bottom: 10px !important;
+    padding-top: 10px !important;
+    border-radius: 14px !important;
+}
+
 .blurAmount {
     filter: blur(8px) !important;
     -webkit-filter: blur(8px);
@@ -98,4 +104,26 @@ body {
 
 .border-primary {
     border-color: #3C38FF !important;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.spinner-style {
+    display: block;
+    margin: 20px auto;
+    border-color: rgba(0, 0, 0, 0.1);
+    border-top-color: #3C38FF;
+    border-style: solid;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    border-width: 5px;
+    animation: spin 1s linear infinite;
 }

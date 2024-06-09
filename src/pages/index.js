@@ -4,24 +4,33 @@ import {useSession} from "next-auth/react";
 import MainLayout from "@/components/MainLayout"
 import MoneyStateCard from "@/components/cards/MoneyStateCard";
 import TextSideBySide from "@/components/text/TextSideBySide";
-import NotificationCard from "@/components/cards/NotificationCard";
 import {useEffect, useState} from "react";
 import Web3 from "@/services/web3";
+import web3 from "@/services/web3";
 import Contract from "@/services/contract";
-import LoginBtn from "@/components/login-btn";
+import {fetchUserData, getUserBalance} from "@/utilities/user/userData";
 
 const Home = () => {
     const {data: session, status} = useSession();
-    const [contract, setContract] = useState(Contract);
+    const contract = Contract();
     const [goalAmount, setGoalAmount] = useState(0);
     const [depositAmount, setDepositAmount] = useState('');
     const [account, setAccount] = useState(null)
     const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS; // Paste your contract address here
     const [userAccount, setUserAccount] = useState(null);
     const [balance, setBalance] = useState('0');
-
-    const centralAccount = '0xDda92628F4090E966c878Bbc2087f010DB14229E';
-    const centralAccountPrivateKey = '0xa6fd3e495dc20a4717fa6bf8eb2b2e1c36e7bf5cd4c0e16e07c20550644816ca';
+    const [cryptoData, setCryptoData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [userData, setUserData] = useState({
+        name: "",
+        email: "",
+        ethAddress: "",
+    });
+    const [priceLoading, setPriceLoading] = useState(true);
+    const [ethAmount, setEthAmount] = useState('');
+    const [usdAmount, setUsdAmount] = useState(null);
+    const [ethPrice, setEthPrice] = useState(null);
+    const [goals, setGoals] = useState([]);
 
     useEffect(() => {
         console.log(contract)
@@ -31,6 +40,85 @@ const Home = () => {
         }
 
     }, [contract]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch('/api/cryptoCurrency');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                setCryptoData(data); // Adjust according to the structure of the response
+                setLoading(false); // Set loading to false after data is fetched
+            } catch (error) {
+                console.error('Error fetching data', error);
+                setLoading(false); // Set loading to false even if there is an error
+            }
+        };
+
+        // Initial fetch
+        fetchData();
+
+    }, []);
+
+    useEffect(() => {
+        const fetchUserDataAndBalance = async () => {
+            const data = await fetchUserData(session);
+            setUserData(data);
+            if (data && data.ethAddress) {
+                const userBalance = await getUserBalance(data);
+                setBalance(userBalance);
+
+                const allGoals = [];
+                for (let i = 0; i < 3; i++) {
+                    const goal = await contract.methods.getGoal(data.ethAddress, i).call();
+                    allGoals.push({index: i, ...goal});
+                }
+                setGoals(allGoals);
+            }
+
+        };
+
+        if (session) {
+            fetchUserDataAndBalance();
+
+        }
+    }, [session]);
+
+    useEffect(() => {
+        const fetchEthPrice = async () => {
+            try {
+                const response = await fetch('/api/eth-to-usd');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                setEthPrice(data.price);
+                setPriceLoading(false);
+            } catch (error) {
+                console.error('Error fetching ETH price', error);
+                setPriceLoading(false);
+            }
+        };
+
+        fetchEthPrice();
+    }, []);
+
+    useEffect(() => {
+        if (ethPrice && balance) {
+            console.log(ethPrice)
+            console.log(balance)
+            const usd = parseFloat(balance) * ethPrice;
+            setUsdAmount(usd);
+        }
+    }, [ethPrice, balance]);
+
+    const convertToUsd = (ethAmount) => {
+        if (ethPrice) {
+            return parseFloat(ethAmount) * ethPrice;
+        }
+    }
 
     const getBalanceOfContract = async () => {
         try {
@@ -43,18 +131,17 @@ const Home = () => {
 
     const getBalanceOfAnAddress = async () => {
         try {
-            const balanceInWei = await contract.methods.getBalance().call({from: '0xdD4A93CA8DDA29E1382A0b958637aD740580F9dF'});
+            const balanceInWei = await contract.methods.getBalance().call({from: '0x55Eec169dC58445D2ffb96216b3bd8d6b898a9b9'});
             const balance = Web3.utils.fromWei(balanceInWei, 'ether')
-            console.log('Balanta contului', balance);
+            console.log('Balanta contului soecificat', balance);
         } catch (error) {
             console.error('Error fetching contract balance:', error);
         }
     }
 
-
     const deposit = async (amountInEth) => {
         const amountInWei = Web3.utils.toWei(amountInEth.toString(), 'ether');
-        await contract.methods.deposit().send({from: account, value: amountInWei});
+        await contract.methods.deposit().send({from: '0x82C1adc1d09E98aeaEa397d3BF86E9633a651129', value: amountInWei});
         await getBalanceOfContract(contract, account);
     };
 
@@ -93,19 +180,18 @@ const Home = () => {
             <main className={`${styles.main}`}>
                 {/*<button onClick={createNewUserAddress}>generate new user address</button>*/}
 
-                <div>
-                    <p>Balance: {balance} ETH</p>
-                    <button onClick={() => deposit(1)}>Deposit 1 ETH</button>
-                    <button onClick={() => withdraw(1)}>Withdraw 1 ETH</button>
-                </div>
+                {/*<div>*/}
+                {/*    <button onClick={() => deposit(1)}>Deposit 1 ETH</button>*/}
+                {/*    <button onClick={() => withdraw(1)}>Withdraw 1 ETH</button>*/}
+                {/*</div>*/}
 
-                <pre>{JSON.stringify(session, null, 2)}</pre>
-                <LoginBtn/>
+                {/*<pre>{JSON.stringify(session, null, 2)}</pre>*/}
+                {/*<LoginBtn/>*/}
 
-                <div className="row">
-                    <div className="col-md-6">
+                <div className="row my-4">
+                    <div className="col-md-8">
                         <p className={"text-secondary"}>Account Summary</p>
-                        <MoneyStateCard amount={1500} dollarAmount={40}/>
+                        <MoneyStateCard amount={balance} dollarAmount={usdAmount} loading={priceLoading}/>
                         <div className={"mb-3"}>
                             <TextSideBySide text={"Money Saved"} moneyAmount={100.31}></TextSideBySide>
                             <TextSideBySide text={"Money blocked in transactions"}
@@ -115,24 +201,53 @@ const Home = () => {
                             <TextSideBySide text={"Loan money"} moneyAmount={1203.31}></TextSideBySide>
 
                         </div>
-                        <MoneyStateCard amount={1500} goal={"new car"} moneyNeeded={"293"}/>
-                        <MoneyStateCard amount={1500} goal={"new car"} moneyNeeded={"293"}/>
-                    </div>
-                    <div className="col-md-6">
-                        <p className={"text-secondary"}>Notifications</p>
-                        <NotificationCard
-                            href={"/assets/3DIcons/plus-dynamic-color.svg"}
-                            notificationTitle={"Money Added"}
-                            notificationDescription={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent dapibus id lectus sodales consectetur. Nunc eleifend auctor augue, sed pulvinar odio tempus at."}
-                        ></NotificationCard>
-                        <NotificationCard
-                            href={"/assets/3DIcons/at-dynamic-color.svg"}
-                            notificationTitle={"Transaction in progress"}
-                            notificationDescription={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent dapibus id lectus sodales consectetur. Nunc eleifend auctor augue, sed pulvinar odio tempus at."}
-                        ></NotificationCard>
+                        {goals.map((goal, index) => (
+                            <div key={index}>
+                                <MoneyStateCard amount={web3.utils.fromWei(goal.balance, "ether")} goal={goal.name}
+                                                moneyNeeded={convertToUsd(web3.utils.fromWei(goal.targetAmount, "ether")) - convertToUsd(web3.utils.fromWei(goal.balance, "ether"))}/>
+                            </div>
+                        ))}
 
                     </div>
+                    <div className="col-md-4">
+                        <p className={"text-secondary"}>Crypto Data</p>
+                        {/*<NotificationCard*/}
+                        {/*    href={"/assets/3DIcons/plus-dynamic-color.svg"}*/}
+                        {/*    notificationTitle={"Money Added"}*/}
+                        {/*    notificationDescription={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent dapibus id lectus sodales consectetur. Nunc eleifend auctor augue, sed pulvinar odio tempus at."}*/}
+                        {/*></NotificationCard>*/}
+                        {/*<NotificationCard*/}
+                        {/*    href={"/assets/3DIcons/at-dynamic-color.svg"}*/}
+                        {/*    notificationTitle={"Transaction in progress"}*/}
+                        {/*    notificationDescription={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent dapibus id lectus sodales consectetur. Nunc eleifend auctor augue, sed pulvinar odio tempus at."}*/}
+                        {/*></NotificationCard>*/}
+                        <div className="card border-0 rounded-4 bg-secondary-subtle px-1 px-lg-3"
+                             data-bs-theme={"dark"}>
+                            <div className="card-body">
+                                {loading ? (
+                                    <div className={"spinner-style"}></div>
+                                ) : (
+                                    cryptoData.map((crypto) => (
+                                        <div key={crypto.id} className={"my-1 my-lg-3"}>
+                                            <div className={"d-flex justify-content-between align-items-center"}>
+                                                <div className={"d-flex align-items-center"}>
+                                                    <img src={crypto.logo} alt={`${crypto.name} logo`} width="36"
+                                                         height="36"/>
+                                                    <div className={"ms-3"}>
+                                                        <h6 className={"mb-0"}>{crypto.name}</h6>
+                                                        <p className={"mb-0 text-secondary"}>{crypto.symbol}</p>
+                                                    </div>
+                                                </div>
+                                                <p className={"mb-0"}>${crypto.quote.USD.price.toFixed(2)}</p>
+                                            </div>
+                                        </div>
+                                    )))}
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
             </main>
         </>
     );
