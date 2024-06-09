@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import contract from './UserContract';
+import { useEffect } from 'react';
+//import contract from './UserContract';
 import web3 from './web3Service';
+
 
 const EditUser = () => {
     const [userAddress, setUserAddress] = useState('');
