@@ -12,7 +12,7 @@ import {fetchUserData, getUserBalance} from "@/utilities/user/userData";
 export default function Navbar() {
     const router = useRouter();
     const {pathname} = router;
-    const {data: session, status} = useSession();
+    const {data: session} = useSession();
     const contract = Contract();
     const [balance, setBalance] = useState('');
     const [userData, setUserData] = useState({
@@ -34,6 +34,7 @@ export default function Navbar() {
 
         if (session) {
             fetchDataAndBalance();
+            console.log(userData);
         }
     }, [session]);
 
@@ -140,7 +141,7 @@ export default function Navbar() {
                                             alt="ETH Wallet Address" height={24}/><span
                                             className={"ms-2 fs-6"}
                                             onClick={handleCopyClick}
-                                        >{truncateAddress(userData.ethAddress)}
+                                        >{userData ? truncateAddress(userData.ethAddress) : ""}
                                             <FontAwesomeIcon className={"ms-2"} icon={faCopy}/></span></a>
                                     </li>
                                     <li className="nav-item">
@@ -155,12 +156,12 @@ export default function Navbar() {
                                            data-bs-toggle="dropdown"
                                            aria-expanded="false"
                                         >
-                                            <FontAwesomeIcon className={"me-2"} icon={faUser}/>{session.user.name}
+                                            <FontAwesomeIcon className={"me-2"} icon={faUser}/>{session ? session.user.name : ""}
                                         </a>
                                         <ul className="dropdown-menu">
-                                            <li><a className="dropdown-item" href="#">Action</a></li>
-                                            <li><a className="dropdown-item" href="#">Another action</a></li>
-                                            <li><a className="dropdown-item" href="#">Something else here</a></li>
+                                            <li><a className="dropdown-item" href="/user/accountSettings">Edit user account</a></li>
+                                            {/*<li><a className="dropdown-item" href="#">Another action</a></li>*/}
+                                            {/*<li><a className="dropdown-item" href="#">Something else here</a></li>*/}
                                         </ul>
                                     </li>
                                 </>

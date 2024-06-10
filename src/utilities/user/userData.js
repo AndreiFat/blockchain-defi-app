@@ -8,7 +8,7 @@ export const fetchUserData = async (session) => {
             const response = await fetch('/api/user');
             if (response.ok) {
                 const data = await response.json();
-                return data.user; // Assuming the returned object has a 'user' key
+                return data.user;
             } else {
                 console.error('Failed to fetch user data:', response.statusText);
             }

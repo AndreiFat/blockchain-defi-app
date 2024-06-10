@@ -31,6 +31,27 @@ export const authOptions = {
             },
         })
     ],
+    callbacks: {
+        async jwt({ token, trigger, session }) {
+            if (trigger === 'update' && session?.firstname && session?.lastname) {
+                token.firstname = session.firstname ;
+                token.lastname = session.lastname;
+            }
+
+            return token
+        },
+        async session({ session, trigger, newSession }) {
+            // Note that `newSession` can be any arbitrary object, remember to validate it!
+            if (trigger === "update" && newSession && newSession.name) {
+                // You can update the session in the database if it's not already updated.
+                // await adapter.updateUser(session.user.id, { name: newSession.name })
+
+                // Make sure the updated value is reflected on the client
+                session.user.name = newSession.name;
+            }
+            return session;
+        }
+    },
     pages: {
         signIn: '/auth/login',
         signOut: '/auth/signout',
