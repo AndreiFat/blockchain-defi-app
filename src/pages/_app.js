@@ -6,6 +6,7 @@ import '@fortawesome/fontawesome-svg-core/styles.css'; // Import FontAwesome CSS
 import {config} from '@fortawesome/fontawesome-svg-core';
 import {useEffect} from "react";
 
+
 config.autoAddCss = false;
 
 export default function App({

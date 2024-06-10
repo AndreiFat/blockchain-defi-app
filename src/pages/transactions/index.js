@@ -1,8 +1,83 @@
 import MainLayout from "@/components/MainLayout";
 import TransactionCard from "@/components/cards/TransactionCard";
 import Head from "next/head";
+import {useEffect, useState} from "react";
+import {useSession} from "next-auth/react";
+import Web3 from "@/services/web3";
+import {faMoneyBillTransfer} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faEthereum} from "@fortawesome/free-brands-svg-icons";
 
 const Index = () => {
+    const [userData, setUserData] = useState({
+        name: "",
+        email: "",
+        ethAddress: "",
+    });
+    const [transactions, setTransactions] = useState([]);
+    const {data: session} = useSession();
+
+    useEffect(() => {
+        const fetchDataAndTransactions = async () => {
+            if (session) {
+                const data = await fetchUserData(session);
+                setUserData(data);
+            }
+        };
+
+        fetchDataAndTransactions();
+    }, [session]);
+
+    useEffect(() => {
+        const fetchTransactionsAndUpdate = async () => {
+            if (userData && userData.ethAddress) {
+                const txs = await fetchTransactions(userData.ethAddress);
+                setTransactions(txs);
+            }
+        };
+
+        fetchTransactionsAndUpdate();
+    }, [userData]);
+
+    const fetchUserData = async (session) => {
+        try {
+            const response = await fetch('/api/user');
+            if (response.ok) {
+                const data = await response.json();
+                return data.user;
+            } else {
+                console.error('Failed to fetch user data:', response.statusText);
+                return null;
+            }
+        } catch (error) {
+            console.error('Error fetching user data:', error);
+            return null;
+        }
+    };
+
+    const fetchTransactions = async (address) => {
+        try {
+            const blockNumber = await Web3.eth.getBlockNumber();
+            const transactions = [];
+            for (let i = blockNumber; i >= 0; i--) {
+                const block = await Web3.eth.getBlock(i, true);
+                if (block && block.transactions) {
+                    block.transactions.forEach(tx => {
+                        if (tx.from === address.toLowerCase() || tx.to === address.toLowerCase()) {
+                            console.log(tx)
+                            transactions.push(tx);
+                        }
+                    });
+                }
+            }
+            console.log(transactions)
+            return transactions;
+        } catch (error) {
+            console.error('Error fetching transactions:', error);
+            return [];
+        }
+    };
+
     return (
         <>
             <Head>
@@ -11,19 +86,36 @@ const Index = () => {
                 <meta name="viewport" content="width=device-width, initial-scale=1"/>
                 <link rel="icon" href="/assets/Logo-simple.svg"/>
             </Head>
-            <div className="container my-5">
+            <div className="container my-4">
                 <div className="row">
                     <div className="col">
-                        <p className="text-secondary">
-                            Transactions
-                        </p>
-                        <TransactionCard
-                            link={"/transactions/1"}
-                            href={"/assets/3DIcons/at-dynamic-color.svg"}
-                            notificationTitle={"Transaction in progress"}
-                            notificationDescription={"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent dapibus id lectus sodales consectetur. Nunc eleifend auctor augue, sed pulvinar odio tempus at."}
-                            ethAmount={0.0032}
-                        ></TransactionCard>
+                        <div className="d-flex justify-content-between align-items-center mb-2">
+                            <p className="text-secondary mb-0">
+                                Transactions
+                            </p>
+                            <div id="buttons" className={"d-flex gap-2"}>
+                                <button className={"btn btn-primary px-3"}><FontAwesomeIcon className={"fa-lg me-2"}
+                                                                                            icon={faEthereum}/> Deposit
+                                    ETH
+                                </button>
+                                <button className={"btn btn-success rounded-4 px-3"}><FontAwesomeIcon
+                                    className={"fa-lg me-2"}
+                                    icon={faMoneyBillTransfer}/> Withdraw
+                                </button>
+                            </div>
+                        </div>
+                        {transactions.map((transaction, index) => (
+                            <TransactionCard
+                                key={index}
+                                from={transaction.from}
+                                to={transaction.to}
+                                link={`/transactions/${transaction.hash}`}
+                                href={transaction.value !== 0n ? "assets/3DIcons/money-dynamic-color.svg" : "/assets/3DIcons/at-dynamic-color.svg"}
+                                notificationTitle={transaction.hash}
+                                notificationDescription={`Gas Price: ${Web3.utils.fromWei(transaction.gasPrice.toString(), 'ether')} ETH  | Gas: ${Web3.utils.fromWei(transaction.gas.toString(), 'ether')} ETH  |  Block Number: ${transaction.blockNumber}`}
+                                ethAmount={transaction.value !== 0n ? Web3.utils.fromWei(transaction.value.toString(), 'ether') : ''}
+                            />
+                        ))}
                     </div>
                 </div>
             </div>

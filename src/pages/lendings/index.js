@@ -3,7 +3,7 @@ import MainLayout from "@/components/MainLayout";
 const Index = () => {
     return (
         <div>
-            Transactions
+            <div className={"my-4"}>Comming Soon...</div>
         </div>
     );
 };

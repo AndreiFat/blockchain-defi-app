@@ -27,10 +27,12 @@ function MoneyStateCard(props) {
                             </h1>
                             {props.dollarAmount ?
                                 <p id="dollarAmount" className={`mb-0 fs-5 ${isVisible ? '' : 'blurAmount'}`}>
-                                    {props.dollarAmount ? `${new Intl.NumberFormat('en-US', {
+                                    {props.dollarAmount ? (props.loading ? (
+                                        <div className={"spinner-style"}></div>
+                                    ) : (`${new Intl.NumberFormat('en-US', {
                                         style: 'currency',
                                         currency: 'USD'
-                                    }).format(props.dollarAmount)}` : '$ 0'}
+                                    }).format(props.dollarAmount)}`)) : ('$ 0')}
                                 </p> : <></>}
                             {props.goal ? <p id="dollarAmount" className="mb-0 fs-5">
                                 For {props.goal}
@@ -46,7 +48,12 @@ function MoneyStateCard(props) {
                     {props.goal ?
                         <div className={"d-flex justify-content-between align-items-center mt-3"}>
                             <div className={"text-secondary"}>
-                                $ {props.moneyNeeded} more is needed
+                                {
+
+                                    `${new Intl.NumberFormat('en-US', {
+                                        style: 'currency',
+                                        currency: 'USD'
+                                    }).format(props.moneyNeeded)}`} more is needed
                             </div>
                             <button className={"font-text-primary p-0 btn btn-link text-decoration-none"}
                                     onClick={handleAddMoneyToGoal}>

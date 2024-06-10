@@ -1,4 +1,5 @@
 import Web3 from "@/services/web3";
+import web3 from "@/services/web3";
 import Contract from "@/services/contract";
 
 const contract = Contract();
@@ -32,7 +33,7 @@ export const getUserBalance = async (userData) => {
     console.log('Using Ethereum address:', ethAddress);
 
     try {
-        const balanceInWei = await contract.methods.getBalance().call({from: ethAddress});
+        const balanceInWei = await web3.eth.getBalance(ethAddress);
         const balanceAmount = Web3.utils.fromWei(balanceInWei, 'ether');
         console.log('User balance:', balanceAmount);
         return balanceAmount
