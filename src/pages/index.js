@@ -5,7 +5,6 @@ import MainLayout from "@/components/MainLayout"
 import MoneyStateCard from "@/components/cards/MoneyStateCard";
 import TextSideBySide from "@/components/text/TextSideBySide";
 import {useEffect, useState} from "react";
-import Web3 from "@/services/web3";
 import web3 from "@/services/web3";
 import Contract from "@/services/contract";
 import {fetchUserData, getUserBalance} from "@/utilities/user/userData";
@@ -31,15 +30,6 @@ const Home = () => {
     const [usdAmount, setUsdAmount] = useState(null);
     const [ethPrice, setEthPrice] = useState(null);
     const [goals, setGoals] = useState([]);
-
-    useEffect(() => {
-        console.log(contract)
-        if (contract) {
-            getBalanceOfContract();
-            getBalanceOfAnAddress()
-        }
-
-    }, [contract]);
 
     useEffect(() => {
         const fetchData = async () => {
@@ -70,8 +60,14 @@ const Home = () => {
                 const userBalance = await getUserBalance(data);
                 setBalance(userBalance);
 
+                const goalsCount = await contract.methods.getAllGoals(data.ethAddress).call();
                 const allGoals = [];
-                for (let i = 0; i < 3; i++) {
+                let count = 0;
+                if (goalsCount.length !== 0) {
+                    count = 1
+                    count = goalsCount.length !== 1 ? 2 : 1
+                }
+                for (let i = 0; i < count; i++) {
                     const goal = await contract.methods.getGoal(data.ethAddress, i).call();
                     allGoals.push({index: i, ...goal});
                 }
@@ -85,6 +81,32 @@ const Home = () => {
 
         }
     }, [session]);
+
+    useEffect(() => {
+        const fetchUserDataAndBalance = async () => {
+            if (userData && userData.ethAddress) {
+
+                const goalsCount = await contract.methods.getAllGoals(userData.ethAddress).call();
+                const allGoals = [];
+                let count = 0;
+                if (goalsCount.length !== 0) {
+                    count = 1
+                    count = goalsCount.length !== 1 ? 2 : 1
+                }
+                for (let i = 0; i < count; i++) {
+                    const goal = await contract.methods.getGoal(userData.ethAddress, i).call();
+                    allGoals.push({index: i, ...goal});
+                }
+                setGoals(allGoals);
+            }
+
+        };
+        if (session) {
+            fetchUserDataAndBalance();
+
+        }
+    }, [session, goals]);
+
 
     useEffect(() => {
         const fetchEthPrice = async () => {
@@ -119,37 +141,6 @@ const Home = () => {
             return parseFloat(ethAmount) * ethPrice;
         }
     }
-
-    const getBalanceOfContract = async () => {
-        try {
-            const balance = await contract.methods.getBalance().call();
-            console.log('Contract Balance:', balance);
-        } catch (error) {
-            console.error('Error fetching contract balance:', error);
-        }
-    };
-
-    const getBalanceOfAnAddress = async () => {
-        try {
-            const balanceInWei = await contract.methods.getBalance().call({from: '0x55Eec169dC58445D2ffb96216b3bd8d6b898a9b9'});
-            const balance = Web3.utils.fromWei(balanceInWei, 'ether')
-            console.log('Balanta contului soecificat', balance);
-        } catch (error) {
-            console.error('Error fetching contract balance:', error);
-        }
-    }
-
-    const deposit = async (amountInEth) => {
-        const amountInWei = Web3.utils.toWei(amountInEth.toString(), 'ether');
-        await contract.methods.deposit().send({from: '0x82C1adc1d09E98aeaEa397d3BF86E9633a651129', value: amountInWei});
-        await getBalanceOfContract(contract, account);
-    };
-
-    const withdraw = async (amountInEth) => {
-        const amountInWei = Web3.utils.toWei(amountInEth.toString(), 'ether');
-        await contract.methods.withdraw(amountInWei).send({from: account});
-        await getBalanceOfContract(contract, account);
-    };
 
     // if (!session) {
     //     return <>
@@ -204,6 +195,7 @@ const Home = () => {
                         {goals.map((goal, index) => (
                             <div key={index}>
                                 <MoneyStateCard amount={web3.utils.fromWei(goal.balance, "ether")} goal={goal.name}
+                                                index={index} account={userData}
                                                 moneyNeeded={convertToUsd(web3.utils.fromWei(goal.targetAmount, "ether")) - convertToUsd(web3.utils.fromWei(goal.balance, "ether"))}/>
                             </div>
                         ))}

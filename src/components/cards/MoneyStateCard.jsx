@@ -1,8 +1,11 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEthereum} from "@fortawesome/free-brands-svg-icons";
 import {faEyeSlash} from "@fortawesome/free-regular-svg-icons";
-import {faVault} from "@fortawesome/free-solid-svg-icons";
 import {useState} from "react";
+import web3 from "@/services/web3";
+import Contract from "@/services/contract"
+import {faVault} from "@fortawesome/free-solid-svg-icons";
+
 
 function MoneyStateCard(props) {
     const [isVisible, setIsVisible] = useState(true);
@@ -14,6 +17,17 @@ function MoneyStateCard(props) {
         console.log("Add Money to " + props.goal)
     }
 
+    const contract = Contract()
+    const [inputValueFund, setInputValueFund] = useState('');
+    const fundGoal = async (goalIndex, amount, account) => {
+        try {
+            const amountInWei = web3.utils.toWei(amount.toString(), "ether");
+            await contract.methods.fundGoal(goalIndex).send({from: account.ethAddress, value: amountInWei});
+
+        } catch (error) {
+            console.error("Error funding goal:", error);
+        }
+    };
     return (
         <>
             <div className="card border-0 rounded-4 bg-secondary-subtle p-2 mb-4" data-bs-theme={"dark"}>
@@ -55,12 +69,29 @@ function MoneyStateCard(props) {
                                         currency: 'USD'
                                     }).format(props.moneyNeeded)}`} more is needed
                             </div>
-                            <button className={"font-text-primary p-0 btn btn-link text-decoration-none"}
-                                    onClick={handleAddMoneyToGoal}>
+                            <a className="font-text-primary rounded-4 text-decoration-none" href="#" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
                                 <FontAwesomeIcon
                                     className={"me-2"}
                                     icon={faVault}/> Add money now
-                            </button>
+                            </a>
+                            <ul className="dropdown-menu rounded-4 mt-1">
+                                <li className={"d-flex align-items-center gap-2 px-2"}>
+                                    <input
+                                        type="number"
+                                        className="form-control py-2 rounded-4"
+                                        placeholder="Enter amount"
+                                        value={inputValueFund}
+                                        onChange={(e) => setInputValueFund(e.target.value)}
+                                    />
+                                    <button className="btn btn-primary d-flex align-items-center"
+                                            onClick={() => fundGoal(props.index, parseFloat(inputValueFund), props.account)}>
+                                        <FontAwesomeIcon
+                                            className={"fa-lg me-2"}
+                                            icon={faEthereum}/> Deposit
+                                    </button>
+                                </li>
+                            </ul>
                         </div> : <></>}
                 </div>
             </div>

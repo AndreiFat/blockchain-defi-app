@@ -3,10 +3,12 @@ import Contract from "@/services/contract";
 import {faEthereum} from "@fortawesome/free-brands-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faMoneyBillTransfer} from "@fortawesome/free-solid-svg-icons";
+import {useState} from "react";
 
 function GoalCard(props) {
     const contract = Contract();
-
+    const [inputValueFund, setInputValueFund] = useState('');
+    const [inputValueWithdraw, setInputValueWithdraw] = useState('');
     const getImage = (type) => {
         let element
         switch (type) {
@@ -66,6 +68,7 @@ function GoalCard(props) {
                                 src={props.image !== '' ? "/assets/3DIcons/umbrella-dynamic-color.png" : "/assets/3DIcons/umbrella-dynamic-color.png"}
                                 height={48}
                                 alt=""/>
+                            <h6>{props.name}</h6>
                         </div>
                         <div className={"d-flex gap-4"}>
                             <div>
@@ -82,27 +85,64 @@ function GoalCard(props) {
                         <div className={"d-flex gap-4"}>
                             <div>
                                 <p className="mb-0 text-secondary">Balance</p>
-                                <p>{props.balance !== '0.' ? props.balance : "0"}</p>
+                                <p className={"mb-0"}>{props.balance !== '0.' ? props.balance : "0"}</p>
 
                             </div>
                             <div>
                                 <p className={"mb-0 text-secondary"}>Target</p>
-                                <p>{props.target} ETH</p>
+                                <p className={"mb-0"}>{props.target} ETH</p>
                             </div>
                         </div>
                         <div>
                             {!props.completed && (
-                                <button className={"btn btn-primary me-2"}
-                                        onClick={() => fundGoal(props.index, 0.0001, props.account)}><FontAwesomeIcon
-                                    className={"fa-lg me-2"}
-                                    icon={faEthereum}/> Deposit</button>
+                                <><a className="btn btn-primary me-2" href="#" role="button"
+                                     data-bs-toggle="dropdown" aria-expanded="false">
+                                    <FontAwesomeIcon
+                                        className={"fa-lg me-2"}
+                                        icon={faEthereum}/> Deposit
+                                </a>
+                                    <ul className="dropdown-menu rounded-4 mt-1">
+                                        <li className={"d-flex align-items-center gap-2 px-2"}>
+                                            <input
+                                                type="number"
+                                                className="form-control py-2 rounded-4"
+                                                placeholder="Enter amount"
+                                                value={inputValueFund}
+                                                onChange={(e) => setInputValueFund(e.target.value)}
+                                            />
+                                            <button className="btn btn-primary d-flex align-items-center"
+                                                    onClick={() => fundGoal(props.index, parseFloat(inputValueFund), props.account)}>
+                                                <FontAwesomeIcon
+                                                    className={"fa-lg me-2"}
+                                                    icon={faEthereum}/> Deposit
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </>
                             )}
-                            <button className={"btn btn-success rounded-4"}
-                                    onClick={() => withdrawFromGoal(props.index, 0.0001, props.account)}>
+                            <a className="btn btn-success rounded-4" href="#" role="button"
+                               data-bs-toggle="dropdown" aria-expanded="false">
                                 <FontAwesomeIcon
                                     className={"fa-lg me-2"}
                                     icon={faMoneyBillTransfer}/> Withdraw
-                            </button>
+                            </a>
+                            <ul className="dropdown-menu rounded-4 mt-1">
+                                <li className={"d-flex align-items-center gap-2 px-2"}>
+                                    <input
+                                        type="number"
+                                        className="form-control py-2 rounded-4"
+                                        placeholder="Enter amount"
+                                        value={inputValueWithdraw}
+                                        onChange={(e) => setInputValueWithdraw(e.target.value)}
+                                    />
+                                    <button className="btn btn-success d-flex align-items-center"
+                                            onClick={() => withdrawFromGoal(props.index, parseFloat(inputValueWithdraw), props.account)}>
+                                        <FontAwesomeIcon
+                                            className={"fa-lg me-2"}
+                                            icon={faMoneyBillTransfer}/> Withdraw
+                                    </button>
+                                </li>
+                            </ul>
                         </div>
                     </div>
 

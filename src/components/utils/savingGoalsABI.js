@@ -255,6 +255,34 @@ export const ContractABI = [
         "type": "function"
     },
     {
+        "inputs": [
+            {
+                "internalType": "address payable",
+                "name": "userAddress",
+                "type": "address"
+            }
+        ],
+        "name": "depositToUser",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function",
+        "payable": true
+    },
+    {
+        "inputs": [
+            {
+                "internalType": "address payable",
+                "name": "userAddress",
+                "type": "address"
+            }
+        ],
+        "name": "withdrawFromUserToOwner",
+        "outputs": [],
+        "stateMutability": "payable",
+        "type": "function",
+        "payable": true
+    },
+    {
         "inputs": [],
         "name": "getBalance",
         "outputs": [
