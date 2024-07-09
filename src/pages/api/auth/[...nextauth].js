@@ -32,22 +32,35 @@ export const authOptions = {
         })
     ],
     callbacks: {
-        async jwt({ token, trigger, session }) {
-            if (trigger === 'update' && session?.firstname && session?.lastname) {
-                token.firstname = session.firstname ;
-                token.lastname = session.lastname;
+        async jwt({token, trigger, session}) {
+            if (trigger === 'update' && session?.name && session?.name) {
+                token.name = session.name;
+                token.email = session.email;
             }
 
             return token
         },
-        async session({ session, trigger, newSession }) {
-            // Note that `newSession` can be any arbitrary object, remember to validate it!
-            if (trigger === "update" && newSession && newSession.name) {
-                // You can update the session in the database if it's not already updated.
-                // await adapter.updateUser(session.user.id, { name: newSession.name })
+        async session({session, trigger, newSession}) {
+            if (trigger === "update" && newSession && (newSession.name || newSession.email)) {
+                const updateData = {};
+                if (newSession.name && typeof newSession.name === 'string' && newSession.name.trim() !== '') {
+                    updateData.name = newSession.name;
+                }
+                if (newSession.email && typeof newSession.email === 'string' && newSession.email.trim() !== '') {
+                    updateData.email = newSession.email;
+                }
 
-                // Make sure the updated value is reflected on the client
-                session.user.name = newSession.name;
+                if (Object.keys(updateData).length > 0) {
+                    await connectToDatabase();
+                    await User.updateOne({email: session.user.email}, {$set: updateData});
+
+                    if (updateData.name) {
+                        session.user.name = updateData.name;
+                    }
+                    if (updateData.email) {
+                        session.user.email = updateData.email;
+                    }
+                }
             }
             return session;
         }

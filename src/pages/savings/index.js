@@ -14,7 +14,7 @@ const Index = () => {
     const {data: session, status} = useSession();
     const contract = Contract();
     const [account, setAccount] = useState(null);
-    const [goalType, setGoalType] = useState(null);
+    const [count, setCount] = useState(null);
 
     useEffect(() => {
         const fetchAccount = async () => {
@@ -32,9 +32,10 @@ const Index = () => {
             if (session && account && account.ethAddress) {
                 const goalsCount = await contract.methods.getAllGoals(account.ethAddress).call();
                 const allGoals = [];
-                for (let i = goalsCount.length; i > 0; i--) {
+                for (let i = 0; i < goalsCount.length; i++) {
                     const goal = await contract.methods.getGoal(account.ethAddress, i).call();
                     allGoals.push({index: i, ...goal});
+                    setCount(goalsCount.length)
                 }
                 setGoals(allGoals);
                 const userBalance = await web3.eth.getBalance(account.ethAddress);
@@ -64,8 +65,6 @@ const Index = () => {
         const targetAmountInWei = web3.utils.toWei(targetAmount, "ether");
         const deadlineTimestamp = Math.floor(new Date(deadline).getTime() / 1000);
         await createGoal(goalName, targetAmountInWei, deadlineTimestamp);
-
-
     };
 
     return (
@@ -80,7 +79,7 @@ const Index = () => {
                 <div className="col">
                     <div className={"d-flex justify-content-between align-items-center mb-2"}>
                         <p className="text-secondary mb-0">
-                            Transactions
+                            Saving Goals
                         </p>
                         <button type="button" className="btn btn-primary" data-bs-toggle="modal"
                                 data-bs-target="#addGoalModal">
@@ -89,32 +88,34 @@ const Index = () => {
                     </div>
 
                     <div className="row">
-                        {goals.map((goal, index) => (
-                            <div className="col-md-6" key={index}>
+                        {count !== null ? <>
+                                {goals.map((goal, index) => (
+                                    <div className="col-md-6" key={index}>
 
-                                {/*<p>Goal {index + 1}</p>*/}
-                                {/*<p>Name: {goal.name}</p>*/}
-                                {/*<p>Target Amount: {web3.utils.fromWei(goal.targetAmount, "ether")} ETH</p>*/}
-                                {/*<p>Deadline: {new Date(Number(goal.deadline) * 1000).toLocaleString()}</p>*/}
-                                {/*<p>Balance: {web3.utils.fromWei(goal.balance, "ether")} ETH</p>*/}
-                                {/*<p>Status: {goal.completed ? "Completed" : "In Progress"}</p>*/}
-                                {/*{!goal.completed && (*/}
-                                {/*    <button onClick={() => fundGoal(index, 0.0001)}>Fund 0.1 ETH</button>*/}
-                                {/*)}*/}
-                                {/*<button onClick={() => withdrawFromGoal(index, 0.0001)}>Withdraw 0.1 ETH</button>*/}
-                                <GoalCard
-                                    image={goal.goalType}
-                                    name={goal.name}
-                                    target={web3.utils.fromWei(goal.targetAmount, "ether")}
-                                    deadline={new Date(Number(goal.deadline) * 1000).toLocaleString()}
-                                    balance={web3.utils.fromWei(goal.balance, "ether")}
-                                    status={goal.completed ? "Completed" : "In Progress"}
-                                    account={account}
-                                    index={index}
-                                />
-                            </div>
+                                        {/*<p>Goal {index + 1}</p>*/}
+                                        {/*<p>Name: {goal.name}</p>*/}
+                                        {/*<p>Target Amount: {web3.utils.fromWei(goal.targetAmount, "ether")} ETH</p>*/}
+                                        {/*<p>Deadline: {new Date(Number(goal.deadline) * 1000).toLocaleString()}</p>*/}
+                                        {/*<p>Balance: {web3.utils.fromWei(goal.balance, "ether")} ETH</p>*/}
+                                        {/*<p>Status: {goal.completed ? "Completed" : "In Progress"}</p>*/}
+                                        {/*{!goal.completed && (*/}
+                                        {/*    <button onClick={() => fundGoal(index, 0.0001)}>Fund 0.1 ETH</button>*/}
+                                        {/*)}*/}
+                                        {/*<button onClick={() => withdrawFromGoal(index, 0.0001)}>Withdraw 0.1 ETH</button>*/}
+                                        <GoalCard
+                                            image={goal.goalType}
+                                            name={goal.name}
+                                            target={web3.utils.fromWei(goal.targetAmount, "ether")}
+                                            deadline={new Date(Number(goal.deadline) * 1000).toLocaleString()}
+                                            balance={web3.utils.fromWei(goal.balance, "ether")}
+                                            status={goal.completed ? "Completed" : "In Progress"}
+                                            account={account}
+                                            index={index}
+                                        />
+                                    </div>
 
-                        ))}
+                                ))}</> :
+                            <div className={"col"}>This is where your goals will be as soon as you add them.</div>}
                     </div>
                     {/*<button className={"btn btn-primary"}*/}
                     {/*        onClick={() => createGoal("Vacation", web3.utils.toWei("5", "ether"), Math.floor(Date.now() / 1000) + 31536000)}>Create*/}
@@ -126,7 +127,7 @@ const Index = () => {
                      tabIndex="-1"
                      aria-labelledby="exampleModalLabel"
                      aria-hidden="true">
-                    <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal-dialog modal-dialog-centered border-0">
                         <div className="modal-content">
                             <div className="modal-header">
                                 <h1 className="modal-title fs-5" id="exampleModalLabel">Create new Goal</h1>
@@ -136,10 +137,10 @@ const Index = () => {
                             <div className="modal-body">
                                 <form onSubmit={handleSubmit}>
                                     <div className="form-group mb-3">
-                                        <label htmlFor="goalName">Goal Name</label>
+                                        <label className={"form-label"} htmlFor="goalName">Goal Name</label>
                                         <input
                                             type="text"
-                                            className="form-control"
+                                            className="form-control form-input w-100"
                                             id="goalName"
                                             value={goalName}
                                             onChange={(e) => setGoalName(e.target.value)}
@@ -147,10 +148,11 @@ const Index = () => {
                                         />
                                     </div>
                                     <div className="form-group mb-3">
-                                        <label htmlFor="targetAmount">Target Amount (ETH)</label>
+                                        <label className={"form-label"} htmlFor="targetAmount">Target Amount
+                                            (ETH)</label>
                                         <input
                                             type="number"
-                                            className="form-control"
+                                            className="form-control form-input w-100"
                                             id="targetAmount"
                                             value={targetAmount}
                                             onChange={(e) => setTargetAmount(e.target.value)}
@@ -158,34 +160,34 @@ const Index = () => {
                                         />
                                     </div>
                                     <div className="form-group mb-3">
-                                        <label htmlFor="deadline">Deadline</label>
+                                        <label className={"form-label"} htmlFor="deadline">Deadline</label>
                                         <input
                                             type="date"
-                                            className="form-control"
+                                            className="form-control form-input w-100"
                                             id="deadline"
                                             value={deadline}
                                             onChange={(e) => setDeadline(e.target.value)}
                                             required
                                         />
                                     </div>
-                                    <div className="form-group mb-3">
-                                        <label htmlFor="goalType">Goal Type</label>
-                                        <select
-                                            className="form-select"
-                                            id="goalType"
-                                            value={goalType}
-                                            onChange={(e) => setGoalType(e.target.value)}
-                                            required
-                                        >
-                                            <option value="">Select a goal type</option>
-                                            <option value="vacation">Vacation</option>
-                                            <option value="investement">Investment</option>
-                                            <option value="saving">Saving</option>
-                                            <option value="gifts">Gifts</option>
+                                    {/*<div className="form-group mb-4">*/}
+                                    {/*    <label className={"form-label"} htmlFor="goalType">Goal Type</label>*/}
+                                    {/*    <select*/}
+                                    {/*        className="form-select form-input w-100"*/}
+                                    {/*        id="goalType"*/}
+                                    {/*        value={goalType}*/}
+                                    {/*        onChange={(e) => setGoalType(e.target.value)}*/}
+                                    {/*        required*/}
+                                    {/*    >*/}
+                                    {/*        <option value="default">Select a goal type</option>*/}
+                                    {/*        <option value="vacation">Vacation</option>*/}
+                                    {/*        <option value="investement">Investment</option>*/}
+                                    {/*        <option value="saving">Saving</option>*/}
+                                    {/*        <option value="gifts">Gifts</option>*/}
 
-                                        </select>
-                                    </div>
-                                    <button type="submit" className="btn btn-primary">
+                                    {/*    </select>*/}
+                                    {/*</div>*/}
+                                    <button type="submit" className="btn btn-primary w-100">
                                         Create New Goal
                                     </button>
                                 </form>

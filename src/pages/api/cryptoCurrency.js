@@ -1,5 +1,5 @@
 export default async function handler(req, res) {
-    const listingsUrl = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=13`;
+    const listingsUrl = `https://pro-api.coinmarketcap.com/v1/cryptocurrency/listings/latest?limit=11`;
     const headers = {
         'X-CMC_PRO_API_KEY': process.env.NEXT_PUBLIC_CMC_API_KEY,
     };

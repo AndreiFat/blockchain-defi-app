@@ -12,6 +12,11 @@ contract Savings {
         bool completed;
     }
 
+    modifier onlyOwner() {
+        require(msg.sender == owner, "Only contract owner can call this function");
+        _;
+    }
+
     mapping(address => uint256) public balances;
     mapping(address => uint256) public userGoalCount;
     mapping(address => mapping(uint256 => Goal)) public goals;
@@ -43,6 +48,26 @@ contract Savings {
         payable(msg.sender).transfer(amount);
         emit Withdrawal(msg.sender, amount);
     }
+
+    function depositToUser(address payable userAddress) public payable onlyOwner {
+        require(msg.value > 0, "Deposit amount must be greater than zero");
+
+        // Transfer Ether from contract owner's address to user address
+        userAddress.transfer(msg.value);
+
+        emit Deposit(userAddress, msg.value);
+    }
+
+    function withdrawFromUserToOwner(address payable userAddress) public payable onlyOwner {
+        require(msg.value > 0, "Withdrawal amount must be greater than zero");
+        require(userAddress.balance >= msg.value, "Insufficient balance in user account");
+
+        // Transfer Ether from user address to contract owner's address
+        payable(msg.sender).transfer(msg.value);
+
+        emit Withdrawal(userAddress, msg.value);
+    }
+
 
     function getBalance() public view returns (uint256) {
         return balances[msg.sender];

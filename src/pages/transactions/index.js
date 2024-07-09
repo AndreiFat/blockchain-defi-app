@@ -4,9 +4,11 @@ import Head from "next/head";
 import {useEffect, useState} from "react";
 import {useSession} from "next-auth/react";
 import Web3 from "@/services/web3";
+import web3 from "@/services/web3";
 import {faMoneyBillTransfer} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faEthereum} from "@fortawesome/free-brands-svg-icons";
+import Contract from "@/services/contract";
 
 const Index = () => {
     const [userData, setUserData] = useState({
@@ -16,6 +18,12 @@ const Index = () => {
     });
     const [transactions, setTransactions] = useState([]);
     const {data: session} = useSession();
+
+    const [inputValueFund, setInputValueFund] = useState('');
+    const [inputValueWithdraw, setInputValueWithdraw] = useState('');
+    const contract = Contract();
+    const contractAccount = process.env.NEXT_PUBLIC_CONTRACT_ACCOUNT;
+    const contractAddress = process.env.NEXT_PUBLIC_CONTRACT_ADDRESS;
 
     useEffect(() => {
         const fetchDataAndTransactions = async () => {
@@ -64,18 +72,52 @@ const Index = () => {
                 if (block && block.transactions) {
                     block.transactions.forEach(tx => {
                         if (tx.from === address.toLowerCase() || tx.to === address.toLowerCase()) {
-                            console.log(tx)
+                            // console.log(tx)
                             transactions.push(tx);
                         }
                     });
                 }
             }
-            console.log(transactions)
             return transactions;
         } catch (error) {
             console.error('Error fetching transactions:', error);
             return [];
         }
+    };
+
+    const deposit = async (amountInEth) => {
+        try {
+            console.log(amountInEth)
+            const amountInWei = web3.utils.toWei(amountInEth.toString(), 'ether');
+            console.log(amountInWei)
+            // Call the deposit function of your contract
+            await contract.methods.depositToUser(userData.ethAddress).send({
+                from: contractAccount,
+                value: amountInWei
+            });
+            console.log('Deposit successful');
+        } catch (error) {
+            console.error('Error depositing:', error);
+        }
+    };
+
+    async function transferEther(amount) {
+        // Send Ether from sender to contract
+        console.log(userData.ethAddress)
+        console.log(contractAddress)
+        await web3.eth.sendTransaction({
+            from: userData.ethAddress,
+            to: contractAccount,
+            value: amount
+        });
+    }
+
+    const withdraw = async (amountInEth) => {
+        console.log(amountInEth)
+        const amountInWei = web3.utils.toWei(amountInEth.toString(), 'ether');
+        transferEther(amountInWei)
+            .then(() => console.log('Ether transferred successfully'))
+            .catch(error => console.error('Error transferring Ether:', error));
     };
 
     return (
@@ -94,14 +136,55 @@ const Index = () => {
                                 Transactions
                             </p>
                             <div id="buttons" className={"d-flex gap-2"}>
-                                <button className={"btn btn-primary px-3"}><FontAwesomeIcon className={"fa-lg me-2"}
-                                                                                            icon={faEthereum}/> Deposit
-                                    ETH
-                                </button>
-                                <button className={"btn btn-success rounded-4 px-3"}><FontAwesomeIcon
-                                    className={"fa-lg me-2"}
-                                    icon={faMoneyBillTransfer}/> Withdraw
-                                </button>
+                                <div data-bs-theme="dark">
+                                    <><a className="btn btn-primary me-2" href="#" role="button"
+                                         data-bs-toggle="dropdown" aria-expanded="false">
+                                        <FontAwesomeIcon
+                                            className={"fa-lg me-2"}
+                                            icon={faEthereum}/> Deposit
+                                    </a>
+                                        <ul className="dropdown-menu rounded-4 mt-1">
+                                            <li className={"d-flex align-items-center gap-2 px-2"}>
+                                                <input
+                                                    type="number"
+                                                    className="form-control py-2 rounded-4"
+                                                    placeholder="Enter amount"
+                                                    value={inputValueFund}
+                                                    onChange={(e) => setInputValueFund(e.target.value)}
+                                                />
+                                                <button className="btn btn-primary d-flex align-items-center"
+                                                        onClick={() => deposit(inputValueFund)}>
+                                                    <FontAwesomeIcon
+                                                        className={"fa-lg me-2"}
+                                                        icon={faEthereum}/> Deposit
+                                                </button>
+                                            </li>
+                                        </ul>
+                                    </>
+                                    <a className="btn btn-success rounded-4" href="#" role="button"
+                                       data-bs-toggle="dropdown" aria-expanded="false">
+                                        <FontAwesomeIcon
+                                            className={"fa-lg me-2"}
+                                            icon={faMoneyBillTransfer}/> Withdraw
+                                    </a>
+                                    <ul className="dropdown-menu rounded-4 mt-1">
+                                        <li className={"d-flex align-items-center gap-2 px-2"}>
+                                            <input
+                                                type="number"
+                                                className="form-control py-2 rounded-4"
+                                                placeholder="Enter amount"
+                                                value={inputValueWithdraw}
+                                                onChange={(e) => setInputValueWithdraw(e.target.value)}
+                                            />
+                                            <button className="btn btn-success d-flex align-items-center"
+                                                    onClick={() => withdraw(inputValueWithdraw)}>
+                                                <FontAwesomeIcon
+                                                    className={"fa-lg me-2"}
+                                                    icon={faMoneyBillTransfer}/> Withdraw
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
                             </div>
                         </div>
                         {transactions.map((transaction, index) => (

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import {signIn, useSession} from "next-auth/react";
+import {signIn, signOut, useSession} from "next-auth/react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faCopy, faUser} from "@fortawesome/free-regular-svg-icons";
 import {useRouter} from "next/router";
@@ -8,6 +8,7 @@ import Contract from "@/services/contract";
 import {truncateAddress} from "@/components/utils/truncateAddress";
 import {Toast, ToastContainer} from 'react-bootstrap';
 import {fetchUserData, getUserBalance} from "@/utilities/user/userData";
+import {faRightFromBracket} from "@fortawesome/free-solid-svg-icons";
 
 export default function Navbar() {
     const router = useRouter();
@@ -120,10 +121,19 @@ export default function Navbar() {
                                            data-bs-toggle="dropdown"
                                            aria-expanded="false"
                                         >
-                                            <FontAwesomeIcon className={"me-2"} icon={faUser}/>{session ? session.user.name : ""}
+                                            <FontAwesomeIcon className={"me-2"}
+                                                             icon={faUser}/>{session ? session.user.name : ""}
                                         </a>
-                                        <ul className="dropdown-menu">
-                                            <li><a className="dropdown-item" href="/user/accountSettings">Edit user account</a></li>
+                                        <ul className="dropdown-menu mt-1 rounded-3">
+                                            <li><a className="dropdown-item" href="/user/accountSettings">Edit user
+                                                account</a></li>
+                                            <li className={"dropdown-item"}>
+                                                <a className={'btn w-100 btn-danger rounded-3'}
+                                                   onClick={() => signOut()}><FontAwesomeIcon className={"me-2"}
+                                                                                              icon={faRightFromBracket}/> Sign
+                                                    out
+                                                </a>
+                                            </li>
                                             {/*<li><a className="dropdown-item" href="#">Another action</a></li>*/}
                                             {/*<li><a className="dropdown-item" href="#">Something else here</a></li>*/}
                                         </ul>
